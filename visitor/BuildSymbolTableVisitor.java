@@ -101,8 +101,8 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<Object, Object>{
         MClassList classList = (MClassList)argu;
 
         n.f0.accept(this, argu);
-
-        MClass newClass = new MClass(n.f1.f0.tokenImage, n.f3.f0.tokenImage, n.f1.f0.beginLine, n.f1.f0.beginColumn);
+        MType parentClass = new MType(n.f3.f0.tokenImage, n.f3.f0.beginLine, n.f3.f0.beginColumn);
+        MClass newClass = new MClass(n.f1.f0.tokenImage, parentClass, n.f1.f0.beginLine, n.f1.f0.beginColumn);
         classList.addClass(newClass);
         n.f1.accept(this, argu);
 

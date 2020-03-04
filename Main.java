@@ -12,13 +12,7 @@ public class Main{
             MType allClassList = new MClassList();
             root.accept(new BuildSymbolTableVisitor(), allClassList);
             root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
-            if(ErrorPrinter.getsize()==0){
-                System.out.println("Program type checked successfully");
-            }
-            else{
-                System.out.println("Type error");
-            }
-            ErrorPrinter.printAll();
+            System.out.println("Program type checked successfully");
         }
         catch(ParseException e){
             e.printStackTrace();

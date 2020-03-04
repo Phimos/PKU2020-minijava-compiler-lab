@@ -1,17 +1,18 @@
 package symbol;
 
 import java.util.ArrayList;
+import typecheck.*;
 
 public class MClass extends MIdentifier{
     protected ArrayList<MMethod> methodList = new ArrayList<MMethod>();
     protected ArrayList<MVar> varList = new ArrayList<MVar>();
-    protected String parentName;
+    protected MType parentName;
     protected MClass parentClass;
 
 
     public MClass(){}
 
-    public MClass(String _name, String _parent, int _row, int _col){
+    public MClass(String _name, MType _parent, int _row, int _col){
         super(_name, "class", _row, _col);
         this.parentName = _parent;
         this.parentClass = null;
@@ -53,6 +54,7 @@ public class MClass extends MIdentifier{
             return true;
         }
         else{
+            ErrorPrinter.getError(2, var, "variable");
             return false;
         }
     }
@@ -81,15 +83,23 @@ public class MClass extends MIdentifier{
             return true;
         }
         else{
+            ErrorPrinter.getError(2, method, "method");
             return false;
         }
     }
 
     public String getParentName(){
-        return this.parentName;
+        if(this.parentName != null){
+            return this.parentName.getName();
+        }
+        else{
+            return null;
+        }
     }
 
-
+    public MType getParentToken(){
+        return this.parentName;
+    }
 
     public MClass getParent(){
         return this.parentClass;

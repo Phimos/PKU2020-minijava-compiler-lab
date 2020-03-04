@@ -1,6 +1,7 @@
 package symbol;
 
 import java.util.ArrayList;
+
 import typecheck.*;
 
 public class MClassList extends MType{
@@ -27,7 +28,7 @@ public class MClassList extends MType{
             classList.add(mclass);
         }
         else{
-            System.out.println("Class define repeatedly");
+            ErrorPrinter.getError(2, mclass, "class");
         }
     }
 
@@ -37,7 +38,7 @@ public class MClassList extends MType{
             if(parentName != null){
                 MClass parent = findClass(parentName);
                 if(parent == null){
-                    ErrorPrinter.addError(String.format("ERROR 6:\n\tno parent: can't extend from nonexist type\n\tlocation: row %d, col %d", obj.getRow(), obj.getCol()));
+                    ErrorPrinter.getError(1, this, "class");
                 }
                 obj.setParent(parent);
             }
@@ -60,7 +61,7 @@ public class MClassList extends MType{
     public void checkAllCycle(){
         for(MClass obj: classList){
             if(checkOneCycle(obj)){
-                ErrorPrinter.addError(String.format("ERROR 6:\n\tloop inherit: you can't be your own father\n\tlocation: row %d, col %d", obj.getRow(), obj.getCol()));
+                ErrorPrinter.getError(6, obj);
             }
         }
     }

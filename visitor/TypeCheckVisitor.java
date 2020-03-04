@@ -20,17 +20,36 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
             return true;
         }
         else{
-            ErrorPrinter.addError(String.format("ERROR 1:\n\tundefined type: can't find the type\n\tlocation: row %d, col %d", type.getRow(), type.getCol()));
+            ErrorPrinter.getError(1, type, "class");
             return false;
         }
     }
 
     public boolean typeEquals(MType type, String typeName){
-        return type.getName().equals(typeName);
+        if(typeName.equals("int") || typeName.equals("int[]") || typeName.equals("boolean")){
+            if(type.getName().equals(typeName)){
+                return true;
+            }
+            else{
+                ErrorPrinter.getError(3, type, typeName);
+                return false;
+            }
+        }
+        else{
+            MClass rightClass = allClassList.findClass(typeName);
+            while(rightClass != null){
+                if(type.getName().equals(rightClass.getName())){
+                    return true;
+                }
+                rightClass = rightClass.getParent();
+            }
+            ErrorPrinter.getError(3, type);
+            return false;
+        }
     }
 
     public boolean typeEquals(MType type1, MType type2){
-        return type1.getName().equals(type2.getName());
+        return typeEquals(type1, type2.getName());
     }
 
     public MVar findVar(MMethod methodBelong, String varName){
@@ -45,12 +64,32 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         return null;
     }
 
-    public MMethod findMethod(MClass classBelong, String methodName){
+    public MVar findVar(MMethod methodBelong, NodeToken var){
+        String varName = var.tokenImage;
+        MVar tempVar = findVar(methodBelong, varName);
+        if(tempVar == null){
+            ErrorPrinter.getError(1, var, "variable");
+        }
+        return tempVar;
+    }
+
+    public MVar findVar(MMethod methodBelong, MType var){
+        String varName = var.getName();
+        MVar tempVar = findVar(methodBelong, varName);
+        if(tempVar == null){
+            ErrorPrinter.getError(1, var, "variable");
+        }
+        return tempVar;
+    }
+
+    public MMethod findMethod(MClass classBelong, MType method){
+        String methodName = method.getName();
         for(;classBelong!=null;classBelong = classBelong.getParent()){
             if(classBelong.existMethod(methodName)){
                 return classBelong.getMethod(methodName);
             }
         }
+        ErrorPrinter.getError(1, method, "method");
         return null;
     }
 
@@ -217,11 +256,9 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f8.accept(this, newMethod);
         n.f9.accept(this, argu);
         
-        MType ret = n.f10.accept(this, argu);
-        if(!typeEquals(ret, type)){
-            ErrorPrinter.addError(String.format("ERROR 4:\n\treturn dismatch: the type of return value is wrong\n\tlocation: row %d, col %d", ret.getRow(), ret.getCol()));
-        }
-        
+        MType ret = n.f10.accept(this, newMethod);
+        typeEquals(ret, type);
+
         n.f11.accept(this, argu);
         n.f12.accept(this, argu);
         return _ret;
@@ -286,18 +323,13 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     public MType visit(AssignmentStatement n, MType argu) {
         MType _ret=null;
         MMethod methodBelong = (MMethod)argu;
-        MVar leftAssign = findVar(methodBelong, n.f0.f0.tokenImage);
-        if(leftAssign == null){
-            ErrorPrinter.addError(String.format("ERROR 1:\n\tundefined variable: can't assign an undefined variable\n\tlocation: row %d, col %d", n.f0.f0.beginLine, n.f0.f0.beginColumn));
-        }
+        MVar leftAssign = findVar(methodBelong, n.f0.f0);
         n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType rightAssign = n.f2.accept(this, argu);
         n.f3.accept(this, argu);
 
-        if(!typeEquals(rightAssign, leftAssign.getType())){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the left part and right part must have the same type\n\tlocation: row %d, col %d", n.f0.f0.beginLine, n.f0.f0.beginColumn));
-        }
+        typeEquals(new MType(leftAssign.getType(), rightAssign.getRow(), rightAssign.getCol()), rightAssign);
         return _ret;
     }    
 
@@ -313,21 +345,17 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     public MType visit(ArrayAssignmentStatement n, MType argu) {
         MType _ret=null;
         n.f0.accept(this, argu);
-        MVar array = findVar((MMethod)argu, n.f0.f0.tokenImage);
-        if(!array.getType().equals("int[]")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: it should be an array\n\tlocation: row %d, col %d", array.getRow(), array.getCol()));
-        }
+        MVar array = findVar((MMethod)argu, n.f0.f0);
+        typeEquals(array, "int[]");
+
         n.f1.accept(this, argu);
         MType indexType = n.f2.accept(this, argu);
-        if(!typeEquals(indexType, "int")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the index of array should be type \"int\"\n\tlocation: row %d, col %d", indexType.getRow(), indexType.getCol()));
-        }
+        typeEquals(indexType, "int");
+        
         n.f3.accept(this, argu);
         n.f4.accept(this, argu);
         MType rightAssign = n.f5.accept(this, argu);
-        if(!typeEquals(rightAssign, "int")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the left part and right part must have the same type\n\tlocation: row %d, col %d", n.f0.f0.beginLine, n.f0.f0.beginColumn));
-        }
+        typeEquals(rightAssign, "int");
         n.f6.accept(this, argu);
         return _ret;
     }
@@ -347,9 +375,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f1.accept(this, argu);
 
         MType exp = n.f2.accept(this, argu);
-        if(!typeEquals(exp, "boolean")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the if statement only accept type \"boolean\"\n\tlocation: row %d, col %d", exp.getRow(), exp.getCol()));
-        }
+        typeEquals(exp, "boolean");
 
         n.f3.accept(this, argu);
         n.f4.accept(this, argu);
@@ -371,9 +397,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f1.accept(this, argu);
 
         MType exp = n.f2.accept(this, argu);
-        if(!typeEquals(exp, "boolean")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the while statement only accept type \"boolean\"\n\tlocation: row %d, col %d", exp.getRow(), exp.getCol()));
-        }
+        typeEquals(exp, "boolean");
 
         n.f3.accept(this, argu);
         n.f4.accept(this, argu);
@@ -392,9 +416,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType exp = n.f2.accept(this, argu);
-        if(!typeEquals(exp, "int")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the print statement only accept type \"int\"\n\tlocation: row %d, col %d", exp.getRow(), exp.getCol()));
-        }
+        typeEquals(exp, "int");
         n.f3.accept(this, argu);
         n.f4.accept(this, argu);
         return _ret;
@@ -424,9 +446,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MType leftExp = n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType rightExp = n.f2.accept(this, argu);
-        if(!(typeEquals(leftExp, "boolean")&&typeEquals(rightExp, "boolean"))){
-            ErrorPrinter.addError(String.format("ERROR 5:\n\toperator: AND expression needs type \"boolean\" on both sides\n\tlocation: row %d, col %d", leftExp.getRow(), leftExp.getCol()));
-        }
+        typeEquals(leftExp, "boolean");
+        typeEquals(rightExp, "boolean");
         return new MType("boolean", leftExp.getRow(), leftExp.getCol());
      }
   
@@ -439,9 +460,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MType leftExp = n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType rightExp = n.f2.accept(this, argu);
-        if(!(typeEquals(leftExp, "int")&&typeEquals(rightExp, "int"))){
-            ErrorPrinter.addError(String.format("ERROR 5:\n\toperator: COMPARE expression needs type \"int\" on both sides\n\tlocation: row %d, col %d", leftExp.getRow(), leftExp.getCol()));
-        }
+        typeEquals(leftExp, "int");
+        typeEquals(rightExp, "int");
         return new MType("boolean", leftExp.getRow(), leftExp.getCol());
      }
   
@@ -454,9 +474,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MType leftExp = n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType rightExp = n.f2.accept(this, argu);
-        if(!(typeEquals(leftExp, "int")&&typeEquals(rightExp, "int"))){
-            ErrorPrinter.addError(String.format("ERROR 5:\n\toperator: PLUS expression needs type \"int\" on both sides\n\tlocation: row %d, col %d", leftExp.getRow(), leftExp.getCol()));
-        }
+        typeEquals(leftExp, "int");
+        typeEquals(rightExp, "int");
         return new MType("int", leftExp.getRow(), leftExp.getCol());
      }
   
@@ -469,9 +488,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MType leftExp = n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType rightExp = n.f2.accept(this, argu);
-        if(!(typeEquals(leftExp, "int")&&typeEquals(rightExp, "int"))){
-            ErrorPrinter.addError(String.format("ERROR 5:\n\toperator: MINUS expression needs type \"int\" on both sides\n\tlocation: row %d, col %d", leftExp.getRow(), leftExp.getCol()));
-        }
+        typeEquals(leftExp, "int");
+        typeEquals(rightExp, "int");
         return new MType("int", leftExp.getRow(), leftExp.getCol());
      }
   
@@ -484,9 +502,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MType leftExp = n.f0.accept(this, argu);
         n.f1.accept(this, argu);
         MType rightExp = n.f2.accept(this, argu);
-        if(!(typeEquals(leftExp, "int")&&typeEquals(rightExp, "int"))){
-            ErrorPrinter.addError(String.format("ERROR 5:\n\toperator: TIMES expression needs type \"int\" on both sides\n\tlocation: row %d, col %d", leftExp.getRow(), leftExp.getCol()));
-        }
+        typeEquals(leftExp, "int");
+        typeEquals(rightExp, "int");
         return new MType("int", leftExp.getRow(), leftExp.getCol());
      }
   
@@ -498,14 +515,10 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
       */
      public MType visit(ArrayLookup n, MType argu) {
         MType array = n.f0.accept(this, argu);
-        if(!typeEquals(array, "int[]")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: it should be an array\n\tlocation: row %d, col %d", array.getRow(), array.getCol()));
-        }
+        typeEquals(array, "int[]");
         n.f1.accept(this, argu);
         MType indexType = n.f2.accept(this, argu);
-        if(!typeEquals(indexType, "int")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the index of array should be type \"int\"\n\tlocation: row %d, col %d", indexType.getRow(), indexType.getCol()));
-        }
+        typeEquals(indexType, "int");
         n.f3.accept(this, argu);
         return new MType("int", array.getRow(), array.getCol());
      }
@@ -517,9 +530,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
       */
      public MType visit(ArrayLength n, MType argu) {
         MType array = n.f0.accept(this, argu);
-        if(!typeEquals(array, "int[]")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: it should be an array\n\tlocation: row %d, col %d", array.getRow(), array.getCol()));
-        }
+        typeEquals(array, "int[]");
         n.f1.accept(this, argu);
         n.f2.accept(this, argu);
         return new MType("int", array.getRow(), array.getCol());
@@ -538,10 +549,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f1.accept(this, argu);
         MType rightPart = n.f2.accept(this, argu);
 
-        MMethod method = findMethod(allClassList.findClass(leftPart.getName()), rightPart.getName());
-        if(method == null){
-            ErrorPrinter.addError(String.format("ERROR 1:\n\tundefined method: can't use an undefined method\n\tlocation: row %d, col %d", n.f2.f0.beginLine, n.f2.f0.beginColumn));
-        }
+        MMethod method = findMethod(allClassList.findClass(leftPart.getName()), rightPart);
 
         n.f3.accept(this, argu);
         n.f4.accept(this, method);
@@ -558,7 +566,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MMethod methodBelong = (MMethod)argu;
         methodBelong.turnonCheckMode();
         MType firstParam = n.f0.accept(this, argu);
-        methodBelong.paramTypeCheck(firstParam);
+        methodBelong.paramTypeCheck(firstParam, this);
         n.f1.accept(this, argu);
         methodBelong.turnoffCheckMode(firstParam.getRow(), firstParam.getCol());
         return _ret;
@@ -571,10 +579,10 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     public MType visit(ExpressionRest n, MType argu) {
         n.f0.accept(this, argu);
         MType param = n.f1.accept(this, argu);
-        ((MMethod)argu).paramTypeCheck(param);
+        ((MMethod)argu).paramTypeCheck(param, this);
         return null;
     }
-/************************************* DONE BELOW *********************************************/
+
      /**
       * f0 -> IntegerLiteral()
       *       | TrueLiteral()
@@ -589,7 +597,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
      public MType visit(PrimaryExpression n, MType argu) {
         MType temp = n.f0.accept(this, argu);
         if((!temp.getName().equals("int"))&&(!temp.getName().equals("int[]"))&&(!temp.getName().equals("boolean"))&&(!allClassList.existClass(temp.getName()))){
-            String varType = findVar((MMethod)argu, temp.getName()).getType();
+            String varType = findVar((MMethod)argu, temp).getType();
             temp.setName(varType);
         }
         return temp;
@@ -650,9 +658,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f2.accept(this, argu);
         
         MType indexType = n.f3.accept(this, argu);
-        if(!typeEquals(indexType, "int")){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the index of array should be type \"int\"\n\tlocation: row %d, col %d", indexType.getRow(), indexType.getCol()));
-        }
+        typeEquals(indexType, "int");
 
         n.f4.accept(this, argu);
         return new MType("int[]", n.f1.beginLine, n.f1.beginColumn);
@@ -679,9 +685,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
      public MType visit(NotExpression n, MType argu) {
         n.f0.accept(this, argu);
         MType exp = n.f1.accept(this, argu);
-        if(!typeEquals(exp, "boolean")){
-            ErrorPrinter.addError(String.format("ERROR 5:\n\toperator: not expression needs type \"boolean\"\n\tlocation: row %d, col %d", exp.getRow(), exp.getCol()));
-        }
+        typeEquals(exp, "boolean");
         return new MType("boolean", n.f0.beginLine, n.f0.beginColumn);
      }
   

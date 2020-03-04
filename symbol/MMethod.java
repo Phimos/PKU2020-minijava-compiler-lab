@@ -3,6 +3,7 @@ package symbol;
 import java.util.ArrayList;
 import java.util.HashMap;
 import typecheck.*;
+import visitor.TypeCheckVisitor;
 
 public class MMethod extends MIdentifier{
     protected String returnType;
@@ -55,7 +56,7 @@ public class MMethod extends MIdentifier{
             return true;
         }
         else{
-            System.out.println("repeated var in method");
+            ErrorPrinter.getError(2, var, "variable");
             return false;
         }
     }
@@ -80,17 +81,15 @@ public class MMethod extends MIdentifier{
     public void turnoffCheckMode(int _row, int _col){
         this.paramCheckMode = false;
         if(paramList.size()!=paramCount){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: input params is not enough\n\tlocation: row %d, col %d", _row, _col));
+            ErrorPrinter.getError(4, _row, _col, null);
         }
     }
 
-    public void paramTypeCheck(MType inputType){
+    public void paramTypeCheck(MType inputType, TypeCheckVisitor tc){
         if(paramList.size()<=paramCount){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: too many input params\n\tlocation: row %d, col %d", inputType.getRow(), inputType.getCol()));
+            ErrorPrinter.getError(4, inputType);
         }
-        if(!paramList.get(paramCount).getType().equals(inputType.getName())){
-            ErrorPrinter.addError(String.format("ERROR 3:\n\ttype mismatch: the type of input param mismatch\n\tlocation: row %d, col %d", inputType.getRow(), inputType.getCol()));
-        }
+        tc.typeEquals(paramList.get(paramCount), inputType);
         this.paramCount++;
     }
 }
