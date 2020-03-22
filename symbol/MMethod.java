@@ -38,6 +38,7 @@ public class MMethod extends MIdentifier{
         }
         else{
             System.out.println("something wrong");
+            ErrorPrinter.getError(0,var);
             return false;
         }
     }
@@ -63,6 +64,10 @@ public class MMethod extends MIdentifier{
 
     public String getReturn(){
         return this.returnType;
+    }
+
+    public ArrayList<MVar> getParams(){
+        return this.paramList;
     }
 
     public MClass getClassBelong() {

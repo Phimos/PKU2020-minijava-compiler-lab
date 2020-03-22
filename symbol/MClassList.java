@@ -66,6 +66,50 @@ public class MClassList extends MType{
         }
     }
 
+    public boolean overloading(MMethod method1, MMethod method2){
+        if(!method1.getName().equals(method2.getName())){
+            return false;
+        }
+        if(!method1.getReturn().equals(method2.getReturn())){
+            return true;
+        }
+        ArrayList<MVar> params1 = method1.getParams();
+        ArrayList<MVar> params2 = method2.getParams();
+        if(params1.size()!=params2.size()){
+            return true;
+        }
+        for(int i=0;i<params1.size();++i){
+            if(!params1.get(i).getType().equals(params2.get(i).getType())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void checkOneOverloading(MClass obj){
+        if(obj.noParent()){
+            return;
+        }
+        for(MClass parent = obj.getParent(); parent!=null; parent = parent.getParent()){
+            for(MMethod method1: obj.getMethodList()){
+                for(MMethod method2: parent.getMethodList()){
+                    if(overloading(method1, method2)){
+                        ErrorPrinter.getError(0, method1);
+                    }
+                }
+            }
+        }
+        return;
+    }
+
+    public void checkAllOverloading(){
+        for(MClass obj: classList){
+            checkOneOverloading(obj);
+        }
+    }
+
+
+
     public void printAll(){
         for(MClass obj: classList){
             obj.printAll();

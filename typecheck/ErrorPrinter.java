@@ -30,7 +30,7 @@ public class ErrorPrinter{
     public static void printError(){
         switch(errorCode){
             case 0: 
-            errorMsg = "Unknown error";
+            errorMsg = "Unnamed error";
             break;
             case 1:
             errorMsg = String.format("Undeclared %s", errorDetail[0]); 

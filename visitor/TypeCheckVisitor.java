@@ -12,6 +12,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         this.allClassList = _allclass;
         allClassList.setAllParent();
         allClassList.checkAllCycle();
+        allClassList.checkAllOverloading();
     }
 
     public boolean checkTypeDeclared(MType type){

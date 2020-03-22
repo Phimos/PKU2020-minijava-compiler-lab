@@ -88,6 +88,10 @@ public class MClass extends MIdentifier{
         }
     }
 
+    public ArrayList<MMethod> getMethodList(){
+        return methodList;
+    }
+
     public String getParentName(){
         if(this.parentName != null){
             return this.parentName.getName();

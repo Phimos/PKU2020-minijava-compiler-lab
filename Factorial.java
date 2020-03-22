@@ -8,6 +8,12 @@ class B extends Start{
     Start ab;
 }
 
+class C extends B{
+    public int start(int asdf){
+        return 0;
+    }
+}
+
 class Start{
     Start star;
     int j;
