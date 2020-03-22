@@ -14,10 +14,16 @@ class C extends B{
     }
 }
 
+
 class Start{
     Start star;
     int j;
     int i;
+
+    public int plusone(int w,int ww){
+        w = w + 1;
+        return w;
+    }
 
     public int start(boolean asdf){
         star = this.next();
@@ -25,8 +31,8 @@ class Start{
     }
 
     public int faslkdjf(int asdf){
-        boolean asdf;
-        return 0;
+        asdf = this.plusone(this.plusone(this.plusone(asdf, asdf), asdf), this.plusone(asdf, asdf));
+        return asdf;
     }
 
     public Start next(){

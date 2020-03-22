@@ -9,21 +9,29 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     
     MClassList allClassList;
     Stack<MMethod> envMethod;
+    Stack<Integer> envCount;
 
     public TypeCheckVisitor(MClassList _allclass){
         this.allClassList = _allclass;
         this.envMethod = new Stack<MMethod>();
+        this.envCount = new Stack<Integer>();
         allClassList.setAllParent();
         allClassList.checkAllCycle();
         allClassList.checkAllOverloading();
     }
 
     public void pushEnv(MMethod env){
-        envMethod.push(env);
+        if(!envMethod.empty()){
+            envCount.push(envMethod.peek().getParamCount());
+        }
+        envMethod.push(env); 
     }
 
     public void popEnv(){
         envMethod.pop();
+        if(!envMethod.empty()){
+            envMethod.peek().setParamCount(envCount.pop());
+        }
     }
 
     public MMethod getEnv(){

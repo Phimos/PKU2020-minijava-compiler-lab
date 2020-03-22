@@ -78,6 +78,14 @@ public class MMethod extends MIdentifier{
         return this.paramCheckMode;
     }
 
+    public void setParamCount(int i){
+        this.paramCount = i;
+    }
+
+    public int getParamCount(){
+        return this.paramCount;
+    }
+
     public void turnonCheckMode(){
         this.paramCheckMode = true;
         this.paramCount = 0;
