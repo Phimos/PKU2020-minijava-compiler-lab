@@ -3,16 +3,31 @@ package visitor;
 import symbol.*;
 import syntaxtree.*;
 import typecheck.*;
+import java.util.*;
 
 public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     
     MClassList allClassList;
+    Stack<MMethod> envMethod;
 
     public TypeCheckVisitor(MClassList _allclass){
         this.allClassList = _allclass;
+        this.envMethod = new Stack<MMethod>();
         allClassList.setAllParent();
         allClassList.checkAllCycle();
         allClassList.checkAllOverloading();
+    }
+
+    public void pushEnv(MMethod env){
+        envMethod.push(env);
+    }
+
+    public void popEnv(){
+        envMethod.pop();
+    }
+
+    public MMethod getEnv(){
+        return envMethod.peek();
     }
 
     public boolean checkTypeDeclared(MType type){
@@ -45,6 +60,30 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
                 rightClass = rightClass.getParent();
             }
             ErrorPrinter.getError(3, type);
+            return false;
+        }
+    }
+
+    public boolean typeEquals(String type, String typeName, int row, int col){
+        String[] nouse = new String [1];
+        if(typeName.equals("int") || typeName.equals("int[]") || typeName.equals("boolean")){
+            if(type.equals(typeName)){
+                return true;
+            }
+            else{
+                ErrorPrinter.getError(3, row, col, nouse);
+                return false;
+            }
+        }
+        else{
+            MClass rightClass = allClassList.findClass(typeName);
+            while(rightClass != null){
+                if(type.equals(rightClass.getName())){
+                    return true;
+                }
+                rightClass = rightClass.getParent();
+            }
+            ErrorPrinter.getError(3, row, col, nouse);
             return false;
         }
     }
@@ -258,6 +297,9 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f9.accept(this, argu);
         
         MType ret = n.f10.accept(this, newMethod);
+
+        //System.out.println(type.getName());
+        //System.out.println(ret.getName());
         typeEquals(type, ret);
 
         n.f11.accept(this, argu);
@@ -347,7 +389,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MType _ret=null;
         n.f0.accept(this, argu);
         MVar array = findVar((MMethod)argu, n.f0.f0);
-        typeEquals(array, "int[]");
+        //System.out.println(array.getName());
+        typeEquals(array.getType(), "int[]", array.getRow(), array.getCol());
 
         n.f1.accept(this, argu);
         MType indexType = n.f2.accept(this, argu);
@@ -553,7 +596,9 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         MMethod method = findMethod(allClassList.findClass(leftPart.getName()), rightPart);
 
         n.f3.accept(this, argu);
-        n.f4.accept(this, method);
+        this.pushEnv(method);
+        n.f4.accept(this, argu);
+        this.popEnv();
         n.f5.accept(this, argu);
         return new MType(method.getReturn(), n.f2.f0.beginLine, n.f2.f0.beginColumn);
      }
@@ -564,7 +609,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
      */
     public MType visit(ExpressionList n, MType argu) {
         MType _ret=null;
-        MMethod methodBelong = (MMethod)argu;
+        MMethod methodBelong = this.getEnv();
         methodBelong.turnonCheckMode();
         MType firstParam = n.f0.accept(this, argu);
         methodBelong.paramTypeCheck(firstParam, this);
@@ -580,7 +625,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     public MType visit(ExpressionRest n, MType argu) {
         n.f0.accept(this, argu);
         MType param = n.f1.accept(this, argu);
-        ((MMethod)argu).paramTypeCheck(param, this);
+        this.getEnv().paramTypeCheck(param, this);
         return null;
     }
 

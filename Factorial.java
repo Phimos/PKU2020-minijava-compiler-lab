@@ -9,7 +9,7 @@ class B extends Start{
 }
 
 class C extends B{
-    public int start(int asdf){
+    public int start(boolean sdf){
         return 0;
     }
 }
@@ -19,8 +19,13 @@ class Start{
     int j;
     int i;
 
-    public int start(){
+    public int start(boolean asdf){
         star = this.next();
+        return 0;
+    }
+
+    public int faslkdjf(int asdf){
+        boolean asdf;
         return 0;
     }
 

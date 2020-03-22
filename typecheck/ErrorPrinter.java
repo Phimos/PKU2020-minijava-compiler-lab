@@ -27,6 +27,10 @@ public class ErrorPrinter{
         getError(_errorcode, _n.beginLine, _n.beginColumn, _detail);
     }
 
+    public static void getError(){
+        errorCode = 0;
+    }
+
     public static void printError(){
         switch(errorCode){
             case 0: 

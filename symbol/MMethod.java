@@ -94,7 +94,8 @@ public class MMethod extends MIdentifier{
         if(paramList.size()<=paramCount){
             ErrorPrinter.getError(4, inputType);
         }
-        tc.typeEquals(paramList.get(paramCount), inputType);
+        //System.out.println(paramList.get(paramCount).getName());
+        tc.typeEquals(paramList.get(paramCount).getType(), inputType.getName(), paramList.get(paramCount).getRow(), paramList.get(paramCount).getCol());
         this.paramCount++;
     }
 }
