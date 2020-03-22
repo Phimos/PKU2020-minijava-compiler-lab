@@ -26,6 +26,8 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
     }
 
     public boolean typeEquals(MType type, String typeName){
+        System.out.println(type.getName());
+        System.out.println(typeName);
         if(typeName.equals("int") || typeName.equals("int[]") || typeName.equals("boolean")){
             if(type.getName().equals(typeName)){
                 return true;
@@ -257,7 +259,7 @@ public class TypeCheckVisitor extends GJDepthFirst<MType, MType>{
         n.f9.accept(this, argu);
         
         MType ret = n.f10.accept(this, newMethod);
-        typeEquals(ret, type);
+        typeEquals(type, ret);
 
         n.f11.accept(this, argu);
         n.f12.accept(this, argu);
