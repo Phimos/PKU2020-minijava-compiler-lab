@@ -13,6 +13,11 @@ public class Main{
             root.accept(new BuildSymbolTableVisitor(), allClassList);
             root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
             System.out.println("Program type checked successfully");
+
+            // ---piglet---
+            allClassList.classComplete();
+            allClassList.allocTemp(20);
+            allClassList.printAll();
         }
         catch(ParseException e){
             e.printStackTrace();

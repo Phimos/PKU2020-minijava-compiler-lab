@@ -77,4 +77,8 @@ public class MType{
         return this.Temp > 0; // -1 represent not initialized
     }
 
+    // for son to override
+    public void printAll(){}
+    public int allocTemp(int currentTmep){return -1;}
+    public void classComplete(){}
 }

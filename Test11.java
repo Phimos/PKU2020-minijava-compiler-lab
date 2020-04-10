@@ -8,6 +8,7 @@ class Test11{
 class Start{
 	Start star;
 	int j;
+	int b;
 
 	public int start(){
 		j = star.next(true);
@@ -15,7 +16,7 @@ class Start{
 	}
 
 	public int next(boolean i){
-		int i; //不允许参数重载
+		//int i; //不允许参数重载
 		return 0;
 	}
 }

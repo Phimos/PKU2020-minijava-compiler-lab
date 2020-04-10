@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 import typecheck.*;
 import visitor.TypeCheckVisitor;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class MMethod extends MIdentifier{
     protected String returnType;
@@ -58,7 +57,6 @@ public class MMethod extends MIdentifier{
         else{
             return classBelong.getVar(varName);
         }
-        return null;
         // don't find
     }
 
@@ -128,7 +126,7 @@ public class MMethod extends MIdentifier{
     public int allocTemp(int currentTemp){
         // first parameters
         
-        num = 1; // 0 is keep
+        int num = 1; // 0 is keep
         for(MVar tPar : paramList){
             tPar.setTempNum(num);
             num ++;
@@ -136,17 +134,14 @@ public class MMethod extends MIdentifier{
         if(num>=20){
             System.out.println("Parameters outflow!\n");
         }
-
-        Pair<String, MVar> tVar;
-        Iterator<String, MVar> iter = varList.iterator();
-        while(iter.hasNext()){
-            tVar = iter.next();
-            MVar tvar = tVar.value();
-            if(tvar.getTempNum() == 0){
-                tvar.setTempNum(currentTemp++);
+        
+        MVar tVar;
+        for(String key : varList.keySet()){
+            tVar = varList.get(key);
+            if(tVar.getTempNum() == 0){
+                tVar.setTempNum(currentTemp++);
             }
         }
-
         return currentTemp;
     }
 

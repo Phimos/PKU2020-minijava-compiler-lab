@@ -115,4 +115,19 @@ public class MClassList extends MType{
             obj.printAll();
         }
     }
+
+    // ---piglet---
+    public void classComplete(){
+        for(MClass tClass :classList){
+            tClass.classComplete();
+        }
+    }
+
+    public int allocTemp(int currentTmep){
+        for(MClass tClass :classList){
+            currentTmep = tClass.allocTemp(currentTmep);
+        }
+        return currentTmep;
+    }
+
 } 
