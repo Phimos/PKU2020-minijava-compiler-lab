@@ -1,6 +1,10 @@
 package symbol;
 
 import java.util.ArrayList;
+
+import org.graalvm.compiler.asm.sparc.SPARCAssembler.MembarMask;
+
+import sun.jvm.hotspot.oops.Oop;
 import typecheck.*;
 
 public class MClass extends MIdentifier{
@@ -115,6 +119,89 @@ public class MClass extends MIdentifier{
 
     public boolean noParent(){
         return this.parentName == null;
+    }
+
+    // ---piglet---
+    public void classComplete(){
+        // add method derive from father to class
+        if(this.getPigStatus() == 0){
+            return ; 
+        }
+
+        // complete parent class first
+        MClass pClass;
+        if(getParent()!=null){
+            pClass = getParent();
+            pClass.classComplete();
+
+            // get derive method
+            for(MMethod pMethod :pClass.methodList){
+                if(existMethod(pMethod.getName()))continue;
+                this.addMethod(pMethod);
+            }
+            
+            for(MVar pVar :pClass.varList){
+                this.addVar(pVar);
+                // Var need to be added all
+            }
+        }
+
+        // add pigName
+        for(MMethod tMethod :this.methodList){
+            if(tMethod.getPigName() == null){
+                tMethod.setPigName(this.getName()+"_"+tMethod.getName());
+            }
+        }
+
+        for(MVar tVar :this.varList){
+            if(tVar.getPigName() == null){
+                tVar.setPigName(this.getName()+"_"+tVar.getName());
+            }
+        }
+
+        this.setPigStatus(0);
+        // done
+    }
+
+    // for method offset find
+    public boolean pdMehtodOffset(int offset){
+        for(MMethod tMethod :methodList){
+            if(tMethod.getOffset() == -1)continue;
+            
+            if(tMethod.getOffset() == offset){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int allocTemp(int currentTemp){
+        // Temp num alloc has to be continuous
+        if(this.getPigStatus() == 1){
+            return currentTemp;
+        }
+        MClass pClass;
+        if(getParent()!=null){
+            pClass = getParent();
+            currentTemp = pClass.allocTemp(currentTemp);
+            // parent first
+        }
+
+        // for Method
+        offset = 0;
+        for(MMethod tMethod :this.methodList){
+            if(tMethod.getOffset() == -1){
+                // alloc offset
+                while(!pdMehtodOffset(offset)){
+                    offset = offset+4;
+                }
+                tMethod.setOffset(offset);
+                currentTemp = tMethod.allocTemp(currentTemp);
+            }
+        }
+        setPigStatus(1);
+        // all done
+        return currentTemp;
     }
 
 }

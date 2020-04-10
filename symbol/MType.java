@@ -54,6 +54,8 @@ public class MType{
         return this.pigStatus;
     }
 
+
+    // for Var and Method
     protected int offset = -1; //the offset in class
     public void setOffset(int off) {
         this.offset = off;
