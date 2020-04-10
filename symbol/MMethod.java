@@ -2,8 +2,11 @@ package symbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import typecheck.*;
 import visitor.TypeCheckVisitor;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class MMethod extends MIdentifier{
     protected String returnType;
@@ -47,8 +50,16 @@ public class MMethod extends MIdentifier{
         return varList.get(varName)!=null;
     }
 
+    // ---piglet--- change
     public MVar getVar(String varName){
-        return varList.get(varName);
+        if(existVar(varName)){
+            return varList.get(varName);
+        }
+        else{
+            return classBelong.getVar(varName);
+        }
+        return null;
+        // don't find
     }
 
     public boolean addVar(MVar var){
@@ -106,4 +117,37 @@ public class MMethod extends MIdentifier{
         tc.typeEquals(paramList.get(paramCount).getType(), inputType.getName(), paramList.get(paramCount).getRow(), paramList.get(paramCount).getCol());
         this.paramCount++;
     }
+
+    // ---piglet---
+    public String getPigDefineMethodName(){ // method define
+        String t = getPigName()+" [ "+(paramCount+1)+" ] ";
+        // first Temp is self, so para+1
+        return t;
+    }
+
+    public int allocTemp(int currentTemp){
+        // first parameters
+        
+        num = 1; // 0 is keep
+        for(MVar tPar : paramList){
+            tPar.setTempNum(num);
+            num ++;
+        }
+        if(num>=20){
+            System.out.println("Parameters outflow!\n");
+        }
+
+        Pair<String, MVar> tVar;
+        Iterator<String, MVar> iter = varList.iterator();
+        while(iter.hasNext()){
+            tVar = iter.next();
+            MVar tvar = tVar.value();
+            if(tvar.getTempNum() == 0){
+                tvar.setTempNum(currentTemp++);
+            }
+        }
+
+        return currentTemp;
+    }
+
 }
