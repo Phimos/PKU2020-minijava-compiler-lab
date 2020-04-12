@@ -65,6 +65,7 @@ public class MType{
     }
 
     protected int Temp = 0;
+    // 0 represent class Var
     public void setTempNum(int tempNum) {
         this.Temp = tempNum;
     }

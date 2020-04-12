@@ -206,6 +206,32 @@ public class MClass extends MIdentifier{
                 currentTemp = tMethod.allocTemp(currentTemp);
             }
         }
+
+        // for Var
+        int beginOffset = -1;
+        offset = 0;
+        for (MVar myVar : varList){
+            if(myVar.getOffset()!=-1){
+                // parent class Vars have been initialized
+                if(myVar.getOffset()>beginOffset){
+                    beginOffset = myVar.getOffset();
+                    // poly
+                }
+            }
+        }
+        if(beginOffset==-1)offset = 4;
+        else{
+            offset = beginOffset+4;
+        }
+        for (MVar myVar : varList){
+            if(myVar.getOffset()!=-1){
+                continue;
+                // has been initialized
+            }
+            myVar.setOffset(offset);
+            offset += 4;
+        }
+        
         setPigStatus(1);
         // all done
         return currentTemp;

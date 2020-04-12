@@ -31,7 +31,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
   public String getNextLabel(){
       int num = this.label;
       String _ret = "L"+num;
-      label ++;
+      this.label += 1;
       return _ret;
   }
 
@@ -43,13 +43,16 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
    //
    // Auto class visitors--probably don't need to be overridden.
    //
+   
+   // dont call
    public MPiglet visit(NodeList n, MType argu) {
       MPiglet _ret=null;
       int _count=0;
       for ( Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
          if(_ret == null){
+            System.out.println("AA");
             _ret = e.nextElement().accept(this,argu); //first new
-            System.out.println(_ret.getCode()); //test
+            System.out.println("aaaa"+_ret.getCode()+"aaaa"); //test
          }
          else
             _ret.addCode(e.nextElement().accept(this,argu), 0);
@@ -65,7 +68,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
          for ( Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
             if(_ret == null){
                _ret = e.nextElement().accept(this,argu); //first new
-               System.out.println(_ret.getCode()); //test
+               //System.out.println(_ret.getCode()); //test
             }
             else
                _ret.addCode(e.nextElement().accept(this,argu), 0);
@@ -90,7 +93,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       for ( Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
          if(_ret == null){
             _ret = e.nextElement().accept(this,argu); //first new
-            System.out.println(_ret.getCode()); //test
+            //System.out.println(_ret.getCode()); //test
          }
          else
             _ret.addCode(e.nextElement().accept(this,argu), 0);
@@ -112,9 +115,9 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
     */
    public MPiglet visit(Goal n, MType argu) {
       MPiglet _ret=null;
-      System.out.println("main,bbb\n");
+      // System.out.println("main,bbb\n");
       _ret = n.f0.accept(this, argu);
-      System.out.println(_ret.getCode()+"\n");
+      // System.out.println(_ret.getCode()+"\n");
       
       _ret.addStr("\nEND");
       _ret.addCode(n.f1.accept(this, argu), 0);
@@ -306,6 +309,8 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
     */
    public MPiglet visit(FormalParameterList n, MType argu) {
       MPiglet _ret=null;
+      // bug1
+      _ret = new MPiglet("");
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       return _ret;
@@ -458,7 +463,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       n.f1.accept(this, argu);
       MPiglet t2 = n.f2.accept(this, argu);
       _ret.addCode(t2, 1);
-      _ret.addStr("\nMOVE"+s1+" PLUS "+s1+" "+s2);
+      _ret.addStr("\nMOVE "+s1+" PLUS "+s1+" "+s2);
       _ret.addStr("\nHSTORE "+s1+" 0");
       // find addr
 
@@ -685,9 +690,9 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       _ret.addCode(t2, 1);
 
       _ret.addCode(new MPiglet("MOVE "+s2+" PLUS 4 TIMES 4 "+s2), 0);
-      // _ret.addCode(new MPiglet("MOVE "+s1+" PLUS"+s1+" "+s2), 0);
+      _ret.addCode(new MPiglet("MOVE "+s1+" PLUS "+s1+" "+s2), 0);// Hload temp1 temp2 temp3 is wrong
 
-      _ret.addCode(new MPiglet("HLOAD "+s3+" "+s1+" "+s2), 0);
+      _ret.addCode(new MPiglet("HLOAD "+s3+" "+s1+" 0"), 0);
       _ret.addCode(new MPiglet("RETURN "+s3+"\nEND"), 0);
       n.f3.accept(this, argu);
       return _ret;
@@ -777,6 +782,8 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
     */
    public MPiglet visit(ExpressionRest n, MType argu) {
       MPiglet _ret=null;
+      // bug1
+      _ret = new MPiglet("");
       n.f0.accept(this, argu);
       MPiglet t1 = n.f1.accept(this, argu);
       _ret.addCode(t1, 1);
@@ -845,7 +852,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
 
       _ret.setVar(varBelong);
       if(varBelong == null){
-         System.out.println("Id Wrong\n");
+         //System.out.println(n.f0.toString()+" Id Wrong\n");
       }
       else{
          String type_var = varBelong.getType();
@@ -870,7 +877,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
    /**
     * f0 -> "this"
     */
-   public MPiglet isit(ThisExpression n, MType argu) {
+   public MPiglet visit(ThisExpression n, MType argu) {
       MPiglet _ret=null;
       _ret = new MPiglet("TEMP 0");
       MClass classBelong = ((MMethod) argu).getClassBelong();
@@ -947,7 +954,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
          varTable.addCode(tmp, 0);
      }
 
-     MPiglet tPig = new MPiglet("HSTORE "+s2+" "+s1+"\nRETURN "+s2+"\nEND");
+     MPiglet tPig = new MPiglet("HSTORE "+s2+" 0 "+s1+"\nRETURN "+s2+"\nEND");
      // class temp0 -> methodtable
 
      _ret.addCode(varTable, 0);

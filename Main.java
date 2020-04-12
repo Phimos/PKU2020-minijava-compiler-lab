@@ -19,8 +19,10 @@ public class Main{
             allClassList.classComplete();
             allClassList.allocTemp(20);
             allClassList.printAll();
+            PrintStream out = new PrintStream("mine.pg");
 
             MPiglet result = root.accept(new MiniJavaToPigletVistor((MClassList)allClassList), allClassList);
+            out.println(result.getCode().toString());
         }
         catch(ParseException e){
             e.printStackTrace();

@@ -11,12 +11,24 @@ class Start{
 	int b;
 
 	public int start(){
-		j = star.next(true);
-		return 0;
+		//j = star.next(true);
+		int mm;
+		star = new Start();
+		b = 1;
+		j = 2;
+		mm = b+j;
+		return mm;
+	}
+
+	public int woqu(){
+		//int i; //不允许参数重载
+		b = 11;
+		j = 2;
+		return 11;
 	}
 
 	public int next(boolean i){
 		//int i; //不允许参数重载
-		return 0;
+		return 11;
 	}
 }
