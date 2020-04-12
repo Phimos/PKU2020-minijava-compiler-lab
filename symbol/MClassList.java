@@ -127,6 +127,7 @@ public class MClassList extends MType{
         for(MClass tClass :classList){
             currentTmep = tClass.allocTemp(currentTmep);
         }
+        setTempNum(currentTmep+1);
         return currentTmep;
     }
 

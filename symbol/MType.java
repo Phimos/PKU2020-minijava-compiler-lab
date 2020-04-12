@@ -74,7 +74,7 @@ public class MType{
     }
 
     public boolean pdTemp(){
-        return this.Temp > 0; // -1 represent not initialized
+        return this.Temp > 0; // 0 represent not initialized
     }
 
     // for son to override

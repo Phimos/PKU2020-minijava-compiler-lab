@@ -38,6 +38,10 @@ public class MClass extends MIdentifier{
         }
     }
 
+    public ArrayList<MVar> getVarList(){
+        return this.varList;
+    }
+
     public boolean existVar(final String varName) {
         for (final MVar obj : varList) {
             if (obj.getName().equals(varName)) {
@@ -207,4 +211,14 @@ public class MClass extends MIdentifier{
         return currentTemp;
     }
 
+    // only need one method table for a class
+    protected String methodTemp = null;
+
+    public void setMethodTemp(String temp) {
+        this.methodTemp = temp;
+    }
+
+    public String getMethodTemp(){
+        return methodTemp;
+    }
 }

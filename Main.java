@@ -14,10 +14,13 @@ public class Main{
             root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
             System.out.println("Program type checked successfully");
 
+            MClassList tclist = new MClassList();
             // ---piglet---
             allClassList.classComplete();
             allClassList.allocTemp(20);
             allClassList.printAll();
+
+            MPiglet result = root.accept(new MiniJavaToPigletVistor((MClassList)allClassList), allClassList);
         }
         catch(ParseException e){
             e.printStackTrace();
