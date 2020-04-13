@@ -18,8 +18,8 @@ public class Main{
             // ---piglet---
             allClassList.classComplete();
             allClassList.allocTemp(20);
-            allClassList.printAll();
-            PrintStream out = new PrintStream("mine.pg");
+            //allClassList.printAll();
+            PrintStream out = new PrintStream(args[0].replace(".java", "_my.pg"));
 
             MPiglet result = root.accept(new MiniJavaToPigletVistor((MClassList)allClassList), allClassList);
             out.println(result.getCode().toString());
