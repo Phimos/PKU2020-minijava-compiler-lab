@@ -935,7 +935,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       String s1 = tClass.getMethodTemp(), s2 = getNextTemp();
 
       _ret.addCode(new MPiglet("BEGIN"), 0);
-      if(flag == 1){ // first
+      // if(flag == 1){ // first
          MPiglet methodTable = new MPiglet("MOVE " + s1 + " HALLOCATE " + 4*tClass.getMethodList().size());
          // alloc method table
          for(MMethod mMethod : tClass.getMethodList()) {
@@ -944,7 +944,6 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
             methodTable.addCode(tmp,0);
         }
         _ret.addCode(methodTable, 0);
-      }
 
       MPiglet varTable = new MPiglet("MOVE " + s2 + " HALLOCATE " + (4+4*tClass.getVarList().size()));
       for(MVar mVar : tClass.getVarList()) {
