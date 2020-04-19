@@ -29,4 +29,16 @@ public class MVar extends MIdentifier{
     public MClass getClassBelong(){
         return this.classBelong;
     }
+
+    // ---piglet--- for para init
+
+    protected MPiglet initValue = null;
+    public void setInitValue(MPiglet value){
+        this.initValue = new MPiglet("");
+        this.initValue.addCode(value, 1);
+    }
+
+    public MPiglet getInitValue(){
+        return initValue;
+    }
 }

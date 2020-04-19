@@ -128,11 +128,16 @@ public class MMethod extends MIdentifier{
         
         int num = 1; // 0 is keep
         for(MVar tPar : paramList){
-            tPar.setTempNum(num);
-            num ++;
-        }
-        if(num>=20){
-            System.out.println("Parameters outflow!\n");
+            if(num>=19){
+                // System.out.println("Parameters outflow!\n");
+                tPar.setTempNum(19);
+                tPar.setTempNum19(num-19);
+                num++;
+            }
+            else{
+                tPar.setTempNum(num);
+                num ++;
+            }
         }
         
         MVar tVar;
@@ -143,6 +148,25 @@ public class MMethod extends MIdentifier{
             }
         }
         return currentTemp;
+    }
+
+    // ---piglet--- for parameters
+    protected int paramNow = -1;
+    public void setParamNow(int count){
+        this.paramNow = count;
+    }
+    
+    public int getParamNow(){
+        return paramNow;
+    }
+
+    public int setParamInit(MPiglet value){
+        MVar tPar = paramList.get(paramNow-1);
+        tPar.setInitValue(value);
+        if(paramNow >= 19)
+            return -1;
+        else
+            return 1;
     }
 
 }

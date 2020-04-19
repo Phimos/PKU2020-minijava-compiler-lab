@@ -5,6 +5,8 @@
 package visitor;
 import syntaxtree.*;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import symbol.MClass;
 import symbol.MClassList;
@@ -61,17 +63,20 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       return _ret;
    }
 
-   public MPiglet visit(NodeListOptional n, MType argu) {
+   public MPiglet visit(NodeListOptional n, MType argu) { 
       if ( n.present() ) { // 
          MPiglet _ret=null;
-         int _count=0;
+         int _count=2;
          for ( Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
+            argu.setParamNow(_count);
             if(_ret == null){
                _ret = e.nextElement().accept(this,argu); //first new
                //System.out.println(_ret.getCode()); //test
             }
             else
-               _ret.addCode(e.nextElement().accept(this,argu), 0);
+            {
+               _ret.addCode(e.nextElement().accept(this,argu), 1);
+            }
             _count++;
          }
          return _ret;
@@ -426,9 +431,16 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       MPiglet exp = n.f2.accept(this, argu);
 
       if(idVar.pdTemp()){
-         // temp =
-         _ret = new MPiglet("MOVE");
-         _ret.addCode(id, 1);
+         if(idVar.getTempNum19()==-1){
+            // temp =
+            _ret = new MPiglet("MOVE");
+            _ret.addCode(id, 1);
+         }
+         else{
+            // temp19 + offset
+            int offset_19 = idVar.getTempNum19();
+            _ret = new MPiglet("HSTORE TEMP 19 " + Integer.toString(offset_19));
+         }
       }
       else{
          // find address
@@ -744,6 +756,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       String s1 = getNextTemp(); 
       String s2 = getNextTemp();
       String s3 = getNextTemp(); 
+      String s4 = getNextTemp();
 
       _ret.addStr("\nMOVE "+s1);
       _ret.addCode(t1, 1);
@@ -753,12 +766,21 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       _ret.addStr("\nRETURN "+s3+"\nEND");
       n.f3.accept(this, argu);
 
-      _ret.addStr("\n("+s1); // s1 -> self
-
+      if(methodBelong.getParamCount()>=19){
+         argu.setTemp19(s4);
+         int total = methodBelong.getParamCount()-19;
+         argu.setTotalParam(total+1);
+      }
       MPiglet t2 = n.f4.accept(this, argu);
+
       n.f5.accept(this, argu);
+      _ret.addStr("\n("+s1); // s1 -> self
       if(t2!=null){
          _ret.addCode(t2, 1);
+      }
+      if(methodBelong.getParamCount()>=19){
+         _ret.addCode(new MPiglet("RETURN "+s4), 0);
+         _ret.addStr("\nEND");
       }
       _ret.addStr(")");
       return _ret;
@@ -773,6 +795,7 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
       _ret = n.f0.accept(this, argu);
       MPiglet t1 = n.f1.accept(this, argu);
       _ret.addCode(t1, 1);
+
       return _ret;
    }
 
@@ -782,11 +805,23 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
     */
    public MPiglet visit(ExpressionRest n, MType argu) {
       MPiglet _ret=null;
+      int flag;
+      String s1 = argu.getTemp19();
       // bug1
       _ret = new MPiglet("");
       n.f0.accept(this, argu);
       MPiglet t1 = n.f1.accept(this, argu);
+      flag = argu.getParamNow();
+      if(flag == 19){
+         _ret.addStr("\nBEGIN");
+         int total=argu.getTotalParam()*4;
+         _ret.addStr("\nMOVE "+s1+" HALLOCATE "+total);
+      }
+      if(flag>=19){
+         _ret.addCode(new MPiglet("HSTORE "+s1+" "+(flag-19)), 0);
+      }
       _ret.addCode(t1, 1);
+      
       return _ret;
    }
 
@@ -860,7 +895,16 @@ public class MiniJavaToPigletVistor extends GJDepthFirst<MPiglet,MType> {
          _ret.setPigClass(classBelong);
 
          if(varBelong.pdTemp()){
-            _ret.addStr("TEMP "+varBelong.getTempNum());
+            if(varBelong.getTempNum19()==-1)
+               _ret.addStr("TEMP "+varBelong.getTempNum());
+
+            else{
+               int offset_19 = varBelong.getTempNum19();
+               String s2 = getNextTemp();
+               _ret.addStr("BEGIN");
+               _ret.addCode(new MPiglet("HLOAD "+s2+" TEMP 19 "+offset_19), 0);
+               _ret.addStr("\nRETURN "+s2+"\nEND");
+            }
          }
          else{
             // class var

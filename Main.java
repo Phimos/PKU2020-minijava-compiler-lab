@@ -17,7 +17,8 @@ public class Main{
             MClassList tclist = new MClassList();
             // ---piglet---
             allClassList.classComplete();
-            allClassList.allocTemp(20);
+            allClassList.allocTemp(25);
+            // avoid overlap
             //allClassList.printAll();
             PrintStream out = new PrintStream(args[0].replace(".java", "_my.pg"));
 
