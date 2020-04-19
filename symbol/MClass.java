@@ -147,7 +147,8 @@ public class MClass extends MIdentifier{
             }
 
             for (final MVar pVar : pClass.varList) {
-                this.addVar(pVar);
+                //this.addVar(pVar);
+                varList.add(pVar);
                 // Var need to be added all
             }
         }
