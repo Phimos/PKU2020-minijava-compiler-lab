@@ -27,291 +27,147 @@ public interface GJVoidVisitor<A> {
    //
 
    /**
-    * f0 -> MainClass()
-    * f1 -> ( TypeDeclaration() )*
-    * f2 -> <EOF>
+    * f0 -> "MAIN"
+    * f1 -> StmtList()
+    * f2 -> "END"
+    * f3 -> ( Procedure() )*
+    * f4 -> <EOF>
     */
    public void visit(Goal n, A argu);
 
    /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "{"
-    * f3 -> "public"
-    * f4 -> "static"
-    * f5 -> "void"
-    * f6 -> "main"
-    * f7 -> "("
-    * f8 -> "String"
-    * f9 -> "["
-    * f10 -> "]"
-    * f11 -> Identifier()
-    * f12 -> ")"
-    * f13 -> "{"
-    * f14 -> ( VarDeclaration() )*
-    * f15 -> ( Statement() )*
-    * f16 -> "}"
-    * f17 -> "}"
+    * f0 -> ( ( Label() )? Stmt() )*
     */
-   public void visit(MainClass n, A argu);
+   public void visit(StmtList n, A argu);
 
    /**
-    * f0 -> ClassDeclaration()
-    *       | ClassExtendsDeclaration()
-    */
-   public void visit(TypeDeclaration n, A argu);
-
-   /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "{"
-    * f3 -> ( VarDeclaration() )*
-    * f4 -> ( MethodDeclaration() )*
-    * f5 -> "}"
-    */
-   public void visit(ClassDeclaration n, A argu);
-
-   /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "extends"
-    * f3 -> Identifier()
-    * f4 -> "{"
-    * f5 -> ( VarDeclaration() )*
-    * f6 -> ( MethodDeclaration() )*
-    * f7 -> "}"
-    */
-   public void visit(ClassExtendsDeclaration n, A argu);
-
-   /**
-    * f0 -> Type()
-    * f1 -> Identifier()
-    * f2 -> ";"
-    */
-   public void visit(VarDeclaration n, A argu);
-
-   /**
-    * f0 -> "public"
-    * f1 -> Type()
-    * f2 -> Identifier()
-    * f3 -> "("
-    * f4 -> ( FormalParameterList() )?
-    * f5 -> ")"
-    * f6 -> "{"
-    * f7 -> ( VarDeclaration() )*
-    * f8 -> ( Statement() )*
-    * f9 -> "return"
-    * f10 -> Expression()
-    * f11 -> ";"
-    * f12 -> "}"
-    */
-   public void visit(MethodDeclaration n, A argu);
-
-   /**
-    * f0 -> FormalParameter()
-    * f1 -> ( FormalParameterRest() )*
-    */
-   public void visit(FormalParameterList n, A argu);
-
-   /**
-    * f0 -> Type()
-    * f1 -> Identifier()
-    */
-   public void visit(FormalParameter n, A argu);
-
-   /**
-    * f0 -> ","
-    * f1 -> FormalParameter()
-    */
-   public void visit(FormalParameterRest n, A argu);
-
-   /**
-    * f0 -> ArrayType()
-    *       | BooleanType()
-    *       | IntegerType()
-    *       | Identifier()
-    */
-   public void visit(Type n, A argu);
-
-   /**
-    * f0 -> "int"
+    * f0 -> Label()
     * f1 -> "["
-    * f2 -> "]"
-    */
-   public void visit(ArrayType n, A argu);
-
-   /**
-    * f0 -> "boolean"
-    */
-   public void visit(BooleanType n, A argu);
-
-   /**
-    * f0 -> "int"
-    */
-   public void visit(IntegerType n, A argu);
-
-   /**
-    * f0 -> Block()
-    *       | AssignmentStatement()
-    *       | ArrayAssignmentStatement()
-    *       | IfStatement()
-    *       | WhileStatement()
-    *       | PrintStatement()
-    */
-   public void visit(Statement n, A argu);
-
-   /**
-    * f0 -> "{"
-    * f1 -> ( Statement() )*
-    * f2 -> "}"
-    */
-   public void visit(Block n, A argu);
-
-   /**
-    * f0 -> Identifier()
-    * f1 -> "="
-    * f2 -> Expression()
-    * f3 -> ";"
-    */
-   public void visit(AssignmentStatement n, A argu);
-
-   /**
-    * f0 -> Identifier()
-    * f1 -> "["
-    * f2 -> Expression()
+    * f2 -> IntegerLiteral()
     * f3 -> "]"
-    * f4 -> "="
-    * f5 -> Expression()
-    * f6 -> ";"
+    * f4 -> StmtExp()
     */
-   public void visit(ArrayAssignmentStatement n, A argu);
+   public void visit(Procedure n, A argu);
 
    /**
-    * f0 -> "if"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> Statement()
-    * f5 -> "else"
-    * f6 -> Statement()
+    * f0 -> NoOpStmt()
+    *       | ErrorStmt()
+    *       | CJumpStmt()
+    *       | JumpStmt()
+    *       | HStoreStmt()
+    *       | HLoadStmt()
+    *       | MoveStmt()
+    *       | PrintStmt()
     */
-   public void visit(IfStatement n, A argu);
+   public void visit(Stmt n, A argu);
 
    /**
-    * f0 -> "while"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> Statement()
+    * f0 -> "NOOP"
     */
-   public void visit(WhileStatement n, A argu);
+   public void visit(NoOpStmt n, A argu);
 
    /**
-    * f0 -> "System.out.println"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> ";"
+    * f0 -> "ERROR"
     */
-   public void visit(PrintStatement n, A argu);
+   public void visit(ErrorStmt n, A argu);
 
    /**
-    * f0 -> AndExpression()
-    *       | CompareExpression()
-    *       | PlusExpression()
-    *       | MinusExpression()
-    *       | TimesExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    * f0 -> "CJUMP"
+    * f1 -> Exp()
+    * f2 -> Label()
     */
-   public void visit(Expression n, A argu);
+   public void visit(CJumpStmt n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f0 -> "JUMP"
+    * f1 -> Label()
     */
-   public void visit(AndExpression n, A argu);
+   public void visit(JumpStmt n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "<"
-    * f2 -> PrimaryExpression()
+    * f0 -> "HSTORE"
+    * f1 -> Exp()
+    * f2 -> IntegerLiteral()
+    * f3 -> Exp()
     */
-   public void visit(CompareExpression n, A argu);
+   public void visit(HStoreStmt n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f0 -> "HLOAD"
+    * f1 -> Temp()
+    * f2 -> Exp()
+    * f3 -> IntegerLiteral()
     */
-   public void visit(PlusExpression n, A argu);
+   public void visit(HLoadStmt n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f0 -> "MOVE"
+    * f1 -> Temp()
+    * f2 -> Exp()
     */
-   public void visit(MinusExpression n, A argu);
+   public void visit(MoveStmt n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f0 -> "PRINT"
+    * f1 -> Exp()
     */
-   public void visit(TimesExpression n, A argu);
+   public void visit(PrintStmt n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "["
-    * f2 -> PrimaryExpression()
-    * f3 -> "]"
+    * f0 -> StmtExp()
+    *       | Call()
+    *       | HAllocate()
+    *       | BinOp()
+    *       | Temp()
+    *       | IntegerLiteral()
+    *       | Label()
     */
-   public void visit(ArrayLookup n, A argu);
+   public void visit(Exp n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "."
-    * f2 -> "length"
+    * f0 -> "BEGIN"
+    * f1 -> StmtList()
+    * f2 -> "RETURN"
+    * f3 -> Exp()
+    * f4 -> "END"
     */
-   public void visit(ArrayLength n, A argu);
+   public void visit(StmtExp n, A argu);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "."
-    * f2 -> Identifier()
-    * f3 -> "("
-    * f4 -> ( ExpressionList() )?
-    * f5 -> ")"
+    * f0 -> "CALL"
+    * f1 -> Exp()
+    * f2 -> "("
+    * f3 -> ( Exp() )*
+    * f4 -> ")"
     */
-   public void visit(MessageSend n, A argu);
+   public void visit(Call n, A argu);
 
    /**
-    * f0 -> Expression()
-    * f1 -> ( ExpressionRest() )*
+    * f0 -> "HALLOCATE"
+    * f1 -> Exp()
     */
-   public void visit(ExpressionList n, A argu);
+   public void visit(HAllocate n, A argu);
 
    /**
-    * f0 -> ","
-    * f1 -> Expression()
+    * f0 -> Operator()
+    * f1 -> Exp()
+    * f2 -> Exp()
     */
-   public void visit(ExpressionRest n, A argu);
+   public void visit(BinOp n, A argu);
 
    /**
-    * f0 -> IntegerLiteral()
-    *       | TrueLiteral()
-    *       | FalseLiteral()
-    *       | Identifier()
-    *       | ThisExpression()
-    *       | ArrayAllocationExpression()
-    *       | AllocationExpression()
-    *       | NotExpression()
-    *       | BracketExpression()
+    * f0 -> "LT"
+    *       | "PLUS"
+    *       | "MINUS"
+    *       | "TIMES"
     */
-   public void visit(PrimaryExpression n, A argu);
+   public void visit(Operator n, A argu);
+
+   /**
+    * f0 -> "TEMP"
+    * f1 -> IntegerLiteral()
+    */
+   public void visit(Temp n, A argu);
 
    /**
     * f0 -> <INTEGER_LITERAL>
@@ -319,54 +175,9 @@ public interface GJVoidVisitor<A> {
    public void visit(IntegerLiteral n, A argu);
 
    /**
-    * f0 -> "true"
-    */
-   public void visit(TrueLiteral n, A argu);
-
-   /**
-    * f0 -> "false"
-    */
-   public void visit(FalseLiteral n, A argu);
-
-   /**
     * f0 -> <IDENTIFIER>
     */
-   public void visit(Identifier n, A argu);
-
-   /**
-    * f0 -> "this"
-    */
-   public void visit(ThisExpression n, A argu);
-
-   /**
-    * f0 -> "new"
-    * f1 -> "int"
-    * f2 -> "["
-    * f3 -> Expression()
-    * f4 -> "]"
-    */
-   public void visit(ArrayAllocationExpression n, A argu);
-
-   /**
-    * f0 -> "new"
-    * f1 -> Identifier()
-    * f2 -> "("
-    * f3 -> ")"
-    */
-   public void visit(AllocationExpression n, A argu);
-
-   /**
-    * f0 -> "!"
-    * f1 -> Expression()
-    */
-   public void visit(NotExpression n, A argu);
-
-   /**
-    * f0 -> "("
-    * f1 -> Expression()
-    * f2 -> ")"
-    */
-   public void visit(BracketExpression n, A argu);
+   public void visit(Label n, A argu);
 
 }
 

@@ -27,291 +27,147 @@ public interface GJNoArguVisitor<R> {
    //
 
    /**
-    * f0 -> MainClass()
-    * f1 -> ( TypeDeclaration() )*
-    * f2 -> <EOF>
+    * f0 -> "MAIN"
+    * f1 -> StmtList()
+    * f2 -> "END"
+    * f3 -> ( Procedure() )*
+    * f4 -> <EOF>
     */
    public R visit(Goal n);
 
    /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "{"
-    * f3 -> "public"
-    * f4 -> "static"
-    * f5 -> "void"
-    * f6 -> "main"
-    * f7 -> "("
-    * f8 -> "String"
-    * f9 -> "["
-    * f10 -> "]"
-    * f11 -> Identifier()
-    * f12 -> ")"
-    * f13 -> "{"
-    * f14 -> ( VarDeclaration() )*
-    * f15 -> ( Statement() )*
-    * f16 -> "}"
-    * f17 -> "}"
+    * f0 -> ( ( Label() )? Stmt() )*
     */
-   public R visit(MainClass n);
+   public R visit(StmtList n);
 
    /**
-    * f0 -> ClassDeclaration()
-    *       | ClassExtendsDeclaration()
-    */
-   public R visit(TypeDeclaration n);
-
-   /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "{"
-    * f3 -> ( VarDeclaration() )*
-    * f4 -> ( MethodDeclaration() )*
-    * f5 -> "}"
-    */
-   public R visit(ClassDeclaration n);
-
-   /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "extends"
-    * f3 -> Identifier()
-    * f4 -> "{"
-    * f5 -> ( VarDeclaration() )*
-    * f6 -> ( MethodDeclaration() )*
-    * f7 -> "}"
-    */
-   public R visit(ClassExtendsDeclaration n);
-
-   /**
-    * f0 -> Type()
-    * f1 -> Identifier()
-    * f2 -> ";"
-    */
-   public R visit(VarDeclaration n);
-
-   /**
-    * f0 -> "public"
-    * f1 -> Type()
-    * f2 -> Identifier()
-    * f3 -> "("
-    * f4 -> ( FormalParameterList() )?
-    * f5 -> ")"
-    * f6 -> "{"
-    * f7 -> ( VarDeclaration() )*
-    * f8 -> ( Statement() )*
-    * f9 -> "return"
-    * f10 -> Expression()
-    * f11 -> ";"
-    * f12 -> "}"
-    */
-   public R visit(MethodDeclaration n);
-
-   /**
-    * f0 -> FormalParameter()
-    * f1 -> ( FormalParameterRest() )*
-    */
-   public R visit(FormalParameterList n);
-
-   /**
-    * f0 -> Type()
-    * f1 -> Identifier()
-    */
-   public R visit(FormalParameter n);
-
-   /**
-    * f0 -> ","
-    * f1 -> FormalParameter()
-    */
-   public R visit(FormalParameterRest n);
-
-   /**
-    * f0 -> ArrayType()
-    *       | BooleanType()
-    *       | IntegerType()
-    *       | Identifier()
-    */
-   public R visit(Type n);
-
-   /**
-    * f0 -> "int"
+    * f0 -> Label()
     * f1 -> "["
-    * f2 -> "]"
-    */
-   public R visit(ArrayType n);
-
-   /**
-    * f0 -> "boolean"
-    */
-   public R visit(BooleanType n);
-
-   /**
-    * f0 -> "int"
-    */
-   public R visit(IntegerType n);
-
-   /**
-    * f0 -> Block()
-    *       | AssignmentStatement()
-    *       | ArrayAssignmentStatement()
-    *       | IfStatement()
-    *       | WhileStatement()
-    *       | PrintStatement()
-    */
-   public R visit(Statement n);
-
-   /**
-    * f0 -> "{"
-    * f1 -> ( Statement() )*
-    * f2 -> "}"
-    */
-   public R visit(Block n);
-
-   /**
-    * f0 -> Identifier()
-    * f1 -> "="
-    * f2 -> Expression()
-    * f3 -> ";"
-    */
-   public R visit(AssignmentStatement n);
-
-   /**
-    * f0 -> Identifier()
-    * f1 -> "["
-    * f2 -> Expression()
+    * f2 -> IntegerLiteral()
     * f3 -> "]"
-    * f4 -> "="
-    * f5 -> Expression()
-    * f6 -> ";"
+    * f4 -> StmtExp()
     */
-   public R visit(ArrayAssignmentStatement n);
+   public R visit(Procedure n);
 
    /**
-    * f0 -> "if"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> Statement()
-    * f5 -> "else"
-    * f6 -> Statement()
+    * f0 -> NoOpStmt()
+    *       | ErrorStmt()
+    *       | CJumpStmt()
+    *       | JumpStmt()
+    *       | HStoreStmt()
+    *       | HLoadStmt()
+    *       | MoveStmt()
+    *       | PrintStmt()
     */
-   public R visit(IfStatement n);
+   public R visit(Stmt n);
 
    /**
-    * f0 -> "while"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> Statement()
+    * f0 -> "NOOP"
     */
-   public R visit(WhileStatement n);
+   public R visit(NoOpStmt n);
 
    /**
-    * f0 -> "System.out.println"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> ";"
+    * f0 -> "ERROR"
     */
-   public R visit(PrintStatement n);
+   public R visit(ErrorStmt n);
 
    /**
-    * f0 -> AndExpression()
-    *       | CompareExpression()
-    *       | PlusExpression()
-    *       | MinusExpression()
-    *       | TimesExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    * f0 -> "CJUMP"
+    * f1 -> Exp()
+    * f2 -> Label()
     */
-   public R visit(Expression n);
+   public R visit(CJumpStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f0 -> "JUMP"
+    * f1 -> Label()
     */
-   public R visit(AndExpression n);
+   public R visit(JumpStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "<"
-    * f2 -> PrimaryExpression()
+    * f0 -> "HSTORE"
+    * f1 -> Exp()
+    * f2 -> IntegerLiteral()
+    * f3 -> Exp()
     */
-   public R visit(CompareExpression n);
+   public R visit(HStoreStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f0 -> "HLOAD"
+    * f1 -> Temp()
+    * f2 -> Exp()
+    * f3 -> IntegerLiteral()
     */
-   public R visit(PlusExpression n);
+   public R visit(HLoadStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f0 -> "MOVE"
+    * f1 -> Temp()
+    * f2 -> Exp()
     */
-   public R visit(MinusExpression n);
+   public R visit(MoveStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f0 -> "PRINT"
+    * f1 -> Exp()
     */
-   public R visit(TimesExpression n);
+   public R visit(PrintStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "["
-    * f2 -> PrimaryExpression()
-    * f3 -> "]"
+    * f0 -> StmtExp()
+    *       | Call()
+    *       | HAllocate()
+    *       | BinOp()
+    *       | Temp()
+    *       | IntegerLiteral()
+    *       | Label()
     */
-   public R visit(ArrayLookup n);
+   public R visit(Exp n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "."
-    * f2 -> "length"
+    * f0 -> "BEGIN"
+    * f1 -> StmtList()
+    * f2 -> "RETURN"
+    * f3 -> Exp()
+    * f4 -> "END"
     */
-   public R visit(ArrayLength n);
+   public R visit(StmtExp n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "."
-    * f2 -> Identifier()
-    * f3 -> "("
-    * f4 -> ( ExpressionList() )?
-    * f5 -> ")"
+    * f0 -> "CALL"
+    * f1 -> Exp()
+    * f2 -> "("
+    * f3 -> ( Exp() )*
+    * f4 -> ")"
     */
-   public R visit(MessageSend n);
+   public R visit(Call n);
 
    /**
-    * f0 -> Expression()
-    * f1 -> ( ExpressionRest() )*
+    * f0 -> "HALLOCATE"
+    * f1 -> Exp()
     */
-   public R visit(ExpressionList n);
+   public R visit(HAllocate n);
 
    /**
-    * f0 -> ","
-    * f1 -> Expression()
+    * f0 -> Operator()
+    * f1 -> Exp()
+    * f2 -> Exp()
     */
-   public R visit(ExpressionRest n);
+   public R visit(BinOp n);
 
    /**
-    * f0 -> IntegerLiteral()
-    *       | TrueLiteral()
-    *       | FalseLiteral()
-    *       | Identifier()
-    *       | ThisExpression()
-    *       | ArrayAllocationExpression()
-    *       | AllocationExpression()
-    *       | NotExpression()
-    *       | BracketExpression()
+    * f0 -> "LT"
+    *       | "PLUS"
+    *       | "MINUS"
+    *       | "TIMES"
     */
-   public R visit(PrimaryExpression n);
+   public R visit(Operator n);
+
+   /**
+    * f0 -> "TEMP"
+    * f1 -> IntegerLiteral()
+    */
+   public R visit(Temp n);
 
    /**
     * f0 -> <INTEGER_LITERAL>
@@ -319,54 +175,9 @@ public interface GJNoArguVisitor<R> {
    public R visit(IntegerLiteral n);
 
    /**
-    * f0 -> "true"
-    */
-   public R visit(TrueLiteral n);
-
-   /**
-    * f0 -> "false"
-    */
-   public R visit(FalseLiteral n);
-
-   /**
     * f0 -> <IDENTIFIER>
     */
-   public R visit(Identifier n);
-
-   /**
-    * f0 -> "this"
-    */
-   public R visit(ThisExpression n);
-
-   /**
-    * f0 -> "new"
-    * f1 -> "int"
-    * f2 -> "["
-    * f3 -> Expression()
-    * f4 -> "]"
-    */
-   public R visit(ArrayAllocationExpression n);
-
-   /**
-    * f0 -> "new"
-    * f1 -> Identifier()
-    * f2 -> "("
-    * f3 -> ")"
-    */
-   public R visit(AllocationExpression n);
-
-   /**
-    * f0 -> "!"
-    * f1 -> Expression()
-    */
-   public R visit(NotExpression n);
-
-   /**
-    * f0 -> "("
-    * f1 -> Expression()
-    * f2 -> ")"
-    */
-   public R visit(BracketExpression n);
+   public R visit(Label n);
 
 }
 

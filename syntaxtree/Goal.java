@@ -6,25 +6,33 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> MainClass()
- * f1 -> ( TypeDeclaration() )*
- * f2 -> <EOF>
+ * f0 -> "MAIN"
+ * f1 -> StmtList()
+ * f2 -> "END"
+ * f3 -> ( Procedure() )*
+ * f4 -> <EOF>
  */
 public class Goal implements Node {
-   public MainClass f0;
-   public NodeListOptional f1;
+   public NodeToken f0;
+   public StmtList f1;
    public NodeToken f2;
+   public NodeListOptional f3;
+   public NodeToken f4;
 
-   public Goal(MainClass n0, NodeListOptional n1, NodeToken n2) {
+   public Goal(NodeToken n0, StmtList n1, NodeToken n2, NodeListOptional n3, NodeToken n4) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
+      f3 = n3;
+      f4 = n4;
    }
 
-   public Goal(MainClass n0, NodeListOptional n1) {
-      f0 = n0;
-      f1 = n1;
-      f2 = new NodeToken("");
+   public Goal(StmtList n0, NodeListOptional n1) {
+      f0 = new NodeToken("MAIN");
+      f1 = n0;
+      f2 = new NodeToken("END");
+      f3 = n1;
+      f4 = new NodeToken("");
    }
 
    public void accept(visitor.Visitor v) {

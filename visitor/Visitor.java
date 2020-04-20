@@ -27,291 +27,147 @@ public interface Visitor {
    //
 
    /**
-    * f0 -> MainClass()
-    * f1 -> ( TypeDeclaration() )*
-    * f2 -> <EOF>
+    * f0 -> "MAIN"
+    * f1 -> StmtList()
+    * f2 -> "END"
+    * f3 -> ( Procedure() )*
+    * f4 -> <EOF>
     */
    public void visit(Goal n);
 
    /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "{"
-    * f3 -> "public"
-    * f4 -> "static"
-    * f5 -> "void"
-    * f6 -> "main"
-    * f7 -> "("
-    * f8 -> "String"
-    * f9 -> "["
-    * f10 -> "]"
-    * f11 -> Identifier()
-    * f12 -> ")"
-    * f13 -> "{"
-    * f14 -> ( VarDeclaration() )*
-    * f15 -> ( Statement() )*
-    * f16 -> "}"
-    * f17 -> "}"
+    * f0 -> ( ( Label() )? Stmt() )*
     */
-   public void visit(MainClass n);
+   public void visit(StmtList n);
 
    /**
-    * f0 -> ClassDeclaration()
-    *       | ClassExtendsDeclaration()
-    */
-   public void visit(TypeDeclaration n);
-
-   /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "{"
-    * f3 -> ( VarDeclaration() )*
-    * f4 -> ( MethodDeclaration() )*
-    * f5 -> "}"
-    */
-   public void visit(ClassDeclaration n);
-
-   /**
-    * f0 -> "class"
-    * f1 -> Identifier()
-    * f2 -> "extends"
-    * f3 -> Identifier()
-    * f4 -> "{"
-    * f5 -> ( VarDeclaration() )*
-    * f6 -> ( MethodDeclaration() )*
-    * f7 -> "}"
-    */
-   public void visit(ClassExtendsDeclaration n);
-
-   /**
-    * f0 -> Type()
-    * f1 -> Identifier()
-    * f2 -> ";"
-    */
-   public void visit(VarDeclaration n);
-
-   /**
-    * f0 -> "public"
-    * f1 -> Type()
-    * f2 -> Identifier()
-    * f3 -> "("
-    * f4 -> ( FormalParameterList() )?
-    * f5 -> ")"
-    * f6 -> "{"
-    * f7 -> ( VarDeclaration() )*
-    * f8 -> ( Statement() )*
-    * f9 -> "return"
-    * f10 -> Expression()
-    * f11 -> ";"
-    * f12 -> "}"
-    */
-   public void visit(MethodDeclaration n);
-
-   /**
-    * f0 -> FormalParameter()
-    * f1 -> ( FormalParameterRest() )*
-    */
-   public void visit(FormalParameterList n);
-
-   /**
-    * f0 -> Type()
-    * f1 -> Identifier()
-    */
-   public void visit(FormalParameter n);
-
-   /**
-    * f0 -> ","
-    * f1 -> FormalParameter()
-    */
-   public void visit(FormalParameterRest n);
-
-   /**
-    * f0 -> ArrayType()
-    *       | BooleanType()
-    *       | IntegerType()
-    *       | Identifier()
-    */
-   public void visit(Type n);
-
-   /**
-    * f0 -> "int"
+    * f0 -> Label()
     * f1 -> "["
-    * f2 -> "]"
-    */
-   public void visit(ArrayType n);
-
-   /**
-    * f0 -> "boolean"
-    */
-   public void visit(BooleanType n);
-
-   /**
-    * f0 -> "int"
-    */
-   public void visit(IntegerType n);
-
-   /**
-    * f0 -> Block()
-    *       | AssignmentStatement()
-    *       | ArrayAssignmentStatement()
-    *       | IfStatement()
-    *       | WhileStatement()
-    *       | PrintStatement()
-    */
-   public void visit(Statement n);
-
-   /**
-    * f0 -> "{"
-    * f1 -> ( Statement() )*
-    * f2 -> "}"
-    */
-   public void visit(Block n);
-
-   /**
-    * f0 -> Identifier()
-    * f1 -> "="
-    * f2 -> Expression()
-    * f3 -> ";"
-    */
-   public void visit(AssignmentStatement n);
-
-   /**
-    * f0 -> Identifier()
-    * f1 -> "["
-    * f2 -> Expression()
+    * f2 -> IntegerLiteral()
     * f3 -> "]"
-    * f4 -> "="
-    * f5 -> Expression()
-    * f6 -> ";"
+    * f4 -> StmtExp()
     */
-   public void visit(ArrayAssignmentStatement n);
+   public void visit(Procedure n);
 
    /**
-    * f0 -> "if"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> Statement()
-    * f5 -> "else"
-    * f6 -> Statement()
+    * f0 -> NoOpStmt()
+    *       | ErrorStmt()
+    *       | CJumpStmt()
+    *       | JumpStmt()
+    *       | HStoreStmt()
+    *       | HLoadStmt()
+    *       | MoveStmt()
+    *       | PrintStmt()
     */
-   public void visit(IfStatement n);
+   public void visit(Stmt n);
 
    /**
-    * f0 -> "while"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> Statement()
+    * f0 -> "NOOP"
     */
-   public void visit(WhileStatement n);
+   public void visit(NoOpStmt n);
 
    /**
-    * f0 -> "System.out.println"
-    * f1 -> "("
-    * f2 -> Expression()
-    * f3 -> ")"
-    * f4 -> ";"
+    * f0 -> "ERROR"
     */
-   public void visit(PrintStatement n);
+   public void visit(ErrorStmt n);
 
    /**
-    * f0 -> AndExpression()
-    *       | CompareExpression()
-    *       | PlusExpression()
-    *       | MinusExpression()
-    *       | TimesExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    * f0 -> "CJUMP"
+    * f1 -> Exp()
+    * f2 -> Label()
     */
-   public void visit(Expression n);
+   public void visit(CJumpStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f0 -> "JUMP"
+    * f1 -> Label()
     */
-   public void visit(AndExpression n);
+   public void visit(JumpStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "<"
-    * f2 -> PrimaryExpression()
+    * f0 -> "HSTORE"
+    * f1 -> Exp()
+    * f2 -> IntegerLiteral()
+    * f3 -> Exp()
     */
-   public void visit(CompareExpression n);
+   public void visit(HStoreStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f0 -> "HLOAD"
+    * f1 -> Temp()
+    * f2 -> Exp()
+    * f3 -> IntegerLiteral()
     */
-   public void visit(PlusExpression n);
+   public void visit(HLoadStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f0 -> "MOVE"
+    * f1 -> Temp()
+    * f2 -> Exp()
     */
-   public void visit(MinusExpression n);
+   public void visit(MoveStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f0 -> "PRINT"
+    * f1 -> Exp()
     */
-   public void visit(TimesExpression n);
+   public void visit(PrintStmt n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "["
-    * f2 -> PrimaryExpression()
-    * f3 -> "]"
+    * f0 -> StmtExp()
+    *       | Call()
+    *       | HAllocate()
+    *       | BinOp()
+    *       | Temp()
+    *       | IntegerLiteral()
+    *       | Label()
     */
-   public void visit(ArrayLookup n);
+   public void visit(Exp n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "."
-    * f2 -> "length"
+    * f0 -> "BEGIN"
+    * f1 -> StmtList()
+    * f2 -> "RETURN"
+    * f3 -> Exp()
+    * f4 -> "END"
     */
-   public void visit(ArrayLength n);
+   public void visit(StmtExp n);
 
    /**
-    * f0 -> PrimaryExpression()
-    * f1 -> "."
-    * f2 -> Identifier()
-    * f3 -> "("
-    * f4 -> ( ExpressionList() )?
-    * f5 -> ")"
+    * f0 -> "CALL"
+    * f1 -> Exp()
+    * f2 -> "("
+    * f3 -> ( Exp() )*
+    * f4 -> ")"
     */
-   public void visit(MessageSend n);
+   public void visit(Call n);
 
    /**
-    * f0 -> Expression()
-    * f1 -> ( ExpressionRest() )*
+    * f0 -> "HALLOCATE"
+    * f1 -> Exp()
     */
-   public void visit(ExpressionList n);
+   public void visit(HAllocate n);
 
    /**
-    * f0 -> ","
-    * f1 -> Expression()
+    * f0 -> Operator()
+    * f1 -> Exp()
+    * f2 -> Exp()
     */
-   public void visit(ExpressionRest n);
+   public void visit(BinOp n);
 
    /**
-    * f0 -> IntegerLiteral()
-    *       | TrueLiteral()
-    *       | FalseLiteral()
-    *       | Identifier()
-    *       | ThisExpression()
-    *       | ArrayAllocationExpression()
-    *       | AllocationExpression()
-    *       | NotExpression()
-    *       | BracketExpression()
+    * f0 -> "LT"
+    *       | "PLUS"
+    *       | "MINUS"
+    *       | "TIMES"
     */
-   public void visit(PrimaryExpression n);
+   public void visit(Operator n);
+
+   /**
+    * f0 -> "TEMP"
+    * f1 -> IntegerLiteral()
+    */
+   public void visit(Temp n);
 
    /**
     * f0 -> <INTEGER_LITERAL>
@@ -319,54 +175,9 @@ public interface Visitor {
    public void visit(IntegerLiteral n);
 
    /**
-    * f0 -> "true"
-    */
-   public void visit(TrueLiteral n);
-
-   /**
-    * f0 -> "false"
-    */
-   public void visit(FalseLiteral n);
-
-   /**
     * f0 -> <IDENTIFIER>
     */
-   public void visit(Identifier n);
-
-   /**
-    * f0 -> "this"
-    */
-   public void visit(ThisExpression n);
-
-   /**
-    * f0 -> "new"
-    * f1 -> "int"
-    * f2 -> "["
-    * f3 -> Expression()
-    * f4 -> "]"
-    */
-   public void visit(ArrayAllocationExpression n);
-
-   /**
-    * f0 -> "new"
-    * f1 -> Identifier()
-    * f2 -> "("
-    * f3 -> ")"
-    */
-   public void visit(AllocationExpression n);
-
-   /**
-    * f0 -> "!"
-    * f1 -> Expression()
-    */
-   public void visit(NotExpression n);
-
-   /**
-    * f0 -> "("
-    * f1 -> Expression()
-    * f2 -> ")"
-    */
-   public void visit(BracketExpression n);
+   public void visit(Label n);
 
 }
 
