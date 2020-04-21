@@ -268,7 +268,7 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
       _ret.addCode(t2, 0);
       
       if(_ret.getCode().toString().length()==0)
-      _ret.addStr("HSTORE "+t1.getTempPre()+" "+n.f2.f0.toString()+" "+t2.getTempPre());
+      _ret.addStr(" HSTORE "+t1.getTempPre()+" "+n.f2.f0.toString()+" "+t2.getTempPre());
       else
       _ret.addStr("\nHSTORE "+t1.getTempPre()+" "+n.f2.f0.toString()+" "+t2.getTempPre());
 
@@ -292,7 +292,7 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
       _ret.addCode(t1, -1);
 
       if(_ret.getCode().toString().length()==0)
-      _ret.addStr("HLOAD "+t2.getTempPre()+" "+t1.getTempPre()+" "+n.f3.f0.toString());
+      _ret.addStr(" HLOAD "+t2.getTempPre()+" "+t1.getTempPre()+" "+n.f3.f0.toString());
       else
       _ret.addStr("\nHLOAD "+t2.getTempPre()+" "+t1.getTempPre()+" "+n.f3.f0.toString());
       return _ret;
@@ -314,14 +314,14 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
          // not a Exp
          _ret.addCode(t2, -1);
          if(_ret.getCode().toString().length()==0)
-         _ret.addStr("MOVE "+t1.getTempPre()+" "+t2.getTempPre());
+         _ret.addStr(" MOVE "+t1.getTempPre()+" "+t2.getTempPre());
          else
          _ret.addStr("\nMOVE "+t1.getTempPre()+" "+t2.getTempPre());
       }
       else{
          _ret.addCode(new MSpiglet(t2.getExpAll()), -1);
          if(_ret.getCode().toString().length()==0)
-         _ret.addStr("MOVE "+t1.getTempPre()+" "+t2.getExp());
+         _ret.addStr(" MOVE "+t1.getTempPre()+" "+t2.getExp());
          else
          _ret.addStr("\nMOVE "+t1.getTempPre()+" "+t2.getExp());
          // Exp for spiglet
