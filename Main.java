@@ -34,7 +34,7 @@ public class Main{
             PigletToSpigletVisitor lab3 = new PigletToSpigletVisitor(mx+10);
             // ensure temp from bigger num
             MSpiglet result = root.accept(lab3);
-            PrintStream out = new PrintStream(args[0].replace(".pg", ".spg"));
+            PrintStream out = new PrintStream(args[0].replace(".pg", "_my.spg"));
             out.println(result.getCode().toString());
         }
         catch(ParseException e){
