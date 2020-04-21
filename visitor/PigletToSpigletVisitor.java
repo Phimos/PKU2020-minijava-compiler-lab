@@ -62,9 +62,8 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
          int _count=0;
          for ( Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
             MSpiglet t1 = e.nextElement().accept(this);
-            if(_ret == null){
+            if(_ret == null)
                _ret = t1;
-            }
             else
                _ret.addCode(t1,0);
             _count++;
@@ -201,7 +200,7 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
    public MSpiglet visit(NoOpStmt n) {
       MSpiglet _ret=null;
       n.f0.accept(this);
-      _ret = new MSpiglet("NOOP");
+      _ret = new MSpiglet("NOOP\n");
       return _ret;
    }
 
