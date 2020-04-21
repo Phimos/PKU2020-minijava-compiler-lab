@@ -25,7 +25,7 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
 
    public PigletToSpigletVisitor(int tempfrom){
       this.tempNow = tempfrom;
-      System.out.println(tempfrom);
+      //System.out.println(tempfrom);
    }
    
    public String getAvaTemp(){
@@ -424,7 +424,7 @@ public class PigletToSpigletVisitor extends GJNoArguDepthFirst<MSpiglet>{
          code = code + " ";
       }
       code += ")";
-      System.out.println(code);
+      //System.out.println(code);
       _ret.addCode(new MSpiglet("MOVE "+s1+" "+code), 0);
       _ret.setTempPre(s1);
 

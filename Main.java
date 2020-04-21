@@ -29,12 +29,12 @@ public class Main{
                 if(num > mx)
                     mx = num;
             }
-            System.out.println(mx);
+            //System.out.println(mx);
 
             PigletToSpigletVisitor lab3 = new PigletToSpigletVisitor(mx+10);
             // ensure temp from bigger num
             MSpiglet result = root.accept(lab3);
-            PrintStream out = new PrintStream(args[0].replace(".pg", ".spg"));
+            PrintStream out = new PrintStream(args[0].replace(".pg", "_my.spg"));
             out.println(result.getCode().toString());
         }
         catch(ParseException e){
@@ -48,37 +48,75 @@ public class Main{
         }
     }
 
-    // public static void lab1(String args[]){
-    //     InputStream in = new FileInputStream(args[0]);
-    //     Node root = new MiniJavaParser(in).Goal();
-    //     MType allClassList = new MClassList();
-    //     root.accept(new BuildSymbolTableVisitor(), allClassList);
-    //     root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
-    //     System.out.println("Program type checked successfully");
-    // }
-
-    // public static void lab2(String args[]){
-    //     InputStream in = new FileInputStream(args[0]);
-    //     Node root = new MiniJavaParser(in).Goal();
-    //     MType allClassList = new MClassList();
-    //     root.accept(new BuildSymbolTableVisitor(), allClassList);
-    //     root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
-
-    //     // ---piglet---
-    //     allClassList.classComplete();
-    //     allClassList.allocTemp(25);
-    //     // avoid overlap
-    //     //allClassList.printAll();
-    //     PrintStream out = new PrintStream(args[0].replace(".java", ".pg"));
-
-    //     MPiglet result = root.accept(new MiniJavaToPigletVistor((MClassList)allClassList), allClassList);
-    //     out.println(result.getCode().toString());
-    // }
-
-    // public static void lab3(String args){
-    //     System.out.println("lab3 not finished");
-    //     InputStream in = new ByteArrayInputStream(args.getBytes());
-    //     Node root = new PigletParser(in).Goal();
-
-    // }
+    //public static void lab1(String args[]){
+    //    try{
+    //        InputStream in = new FileInputStream(args[0]);
+    //        Node root = new MiniJavaParser(in).Goal();
+    //        MType allClassList = new MClassList();
+    //        root.accept(new BuildSymbolTableVisitor(), allClassList);
+    //        root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
+    //        System.out.println("Program type checked successfully");
+    //    }
+    //    catch(ParseException e){
+    //        e.printStackTrace();
+    //    }
+    //    catch(TokenMgrError e){
+    //        e.printStackTrace();
+    //    }
+    //    catch(Exception e){
+    //        e.printStackTrace();
+    //    }
+    //}
+    //public static void lab2(String args[]){
+    //    try{
+    //        InputStream in = new FileInputStream(args[0]);
+    //        Node root = new MiniJavaParser(in).Goal();
+    //        MType allClassList = new MClassList();
+    //        root.accept(new BuildSymbolTableVisitor(), allClassList);
+    //        root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
+    //        // ---piglet---
+    //        allClassList.classComplete();
+    //        allClassList.allocTemp(25);
+    //        // avoid overlap
+    //        //allClassList.printAll();
+    //        PrintStream out = new PrintStream(args[0].replace(".java", ".pg"));
+    //        MPiglet result = root.accept(new MiniJavaToPigletVistor((MClassList)allClassList), allClassList);
+    //        out.println(result.getCode().toString());
+    //    }
+    //    catch(ParseException e){
+    //        e.printStackTrace();
+    //    }
+    //    catch(TokenMgrError e){
+    //        e.printStackTrace();
+    //    }
+    //    catch(Exception e){
+    //        e.printStackTrace();
+    //    }
+    //}
+    //public static void lab3(String args){
+    //    try{
+    //        InputStream in = new FileInputStream(args[0]);
+    //        Node root = new MiniJavaParser(in).Goal();
+    //        MType allClassList = new MClassList();
+    //        root.accept(new BuildSymbolTableVisitor(), allClassList);
+    //        root.accept(new TypeCheckVisitor((MClassList)allClassList), allClassList);
+    //        // ---piglet---
+    //        allClassList.classComplete();
+    //        allClassList.allocTemp(25);
+    //        // avoid overlap
+    //        //allClassList.printAll();
+    //        PrintStream out = new PrintStream(args[0].replace(".java", ".pg"));
+    //        MPiglet result = root.accept(new MiniJavaToPigletVistor((MClassList)allClassList), allClassList);
+    //        out.println(result.getCode().toString());
+    //    }
+    //    catch(ParseException e){
+    //        e.printStackTrace();
+    //    }
+    //    catch(TokenMgrError e){
+    //        e.printStackTrace();
+    //    }
+    //    catch(Exception e){
+    //        e.printStackTrace();
+    //    }
+    //}
 }
