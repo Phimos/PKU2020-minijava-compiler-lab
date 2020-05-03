@@ -73,7 +73,7 @@ public interface GJNoArguVisitor<R> {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Exp()
+    * f1 -> Temp()
     * f2 -> Label()
     */
    public R visit(CJumpStmt n);
@@ -86,16 +86,16 @@ public interface GJNoArguVisitor<R> {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Exp()
+    * f1 -> Temp()
     * f2 -> IntegerLiteral()
-    * f3 -> Exp()
+    * f3 -> Temp()
     */
    public R visit(HStoreStmt n);
 
    /**
     * f0 -> "HLOAD"
     * f1 -> Temp()
-    * f2 -> Exp()
+    * f2 -> Temp()
     * f3 -> IntegerLiteral()
     */
    public R visit(HLoadStmt n);
@@ -109,18 +109,15 @@ public interface GJNoArguVisitor<R> {
 
    /**
     * f0 -> "PRINT"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     */
    public R visit(PrintStmt n);
 
    /**
-    * f0 -> StmtExp()
-    *       | Call()
+    * f0 -> Call()
     *       | HAllocate()
     *       | BinOp()
-    *       | Temp()
-    *       | IntegerLiteral()
-    *       | Label()
+    *       | SimpleExp()
     */
    public R visit(Exp n);
 
@@ -128,30 +125,30 @@ public interface GJNoArguVisitor<R> {
     * f0 -> "BEGIN"
     * f1 -> StmtList()
     * f2 -> "RETURN"
-    * f3 -> Exp()
+    * f3 -> SimpleExp()
     * f4 -> "END"
     */
    public R visit(StmtExp n);
 
    /**
     * f0 -> "CALL"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     * f2 -> "("
-    * f3 -> ( Exp() )*
+    * f3 -> ( Temp() )*
     * f4 -> ")"
     */
    public R visit(Call n);
 
    /**
     * f0 -> "HALLOCATE"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     */
    public R visit(HAllocate n);
 
    /**
     * f0 -> Operator()
-    * f1 -> Exp()
-    * f2 -> Exp()
+    * f1 -> Temp()
+    * f2 -> SimpleExp()
     */
    public R visit(BinOp n);
 
@@ -162,6 +159,13 @@ public interface GJNoArguVisitor<R> {
     *       | "TIMES"
     */
    public R visit(Operator n);
+
+   /**
+    * f0 -> Temp()
+    *       | IntegerLiteral()
+    *       | Label()
+    */
+   public R visit(SimpleExp n);
 
    /**
     * f0 -> "TEMP"

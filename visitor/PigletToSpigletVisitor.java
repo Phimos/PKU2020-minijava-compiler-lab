@@ -4,17 +4,10 @@
 
 package visitor;
 import syntaxtree.*;
+import symbol.*;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
-
-import symbol.MClass;
-import symbol.MClassList;
-import symbol.MMethod;
-import symbol.MPiglet;
-import symbol.MSpiglet;
-import symbol.MType;
-import symbol.MVar;
 
 /**
  * Provides default methods which visit each node in the tree in depth-first

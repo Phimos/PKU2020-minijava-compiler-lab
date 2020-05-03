@@ -6,13 +6,10 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> StmtExp()
- *       | Call()
+ * f0 -> Call()
  *       | HAllocate()
  *       | BinOp()
- *       | Temp()
- *       | IntegerLiteral()
- *       | Label()
+ *       | SimpleExp()
  */
 public class Exp implements Node {
    public NodeChoice f0;

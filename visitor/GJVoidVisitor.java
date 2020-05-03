@@ -73,7 +73,7 @@ public interface GJVoidVisitor<A> {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Exp()
+    * f1 -> Temp()
     * f2 -> Label()
     */
    public void visit(CJumpStmt n, A argu);
@@ -86,16 +86,16 @@ public interface GJVoidVisitor<A> {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Exp()
+    * f1 -> Temp()
     * f2 -> IntegerLiteral()
-    * f3 -> Exp()
+    * f3 -> Temp()
     */
    public void visit(HStoreStmt n, A argu);
 
    /**
     * f0 -> "HLOAD"
     * f1 -> Temp()
-    * f2 -> Exp()
+    * f2 -> Temp()
     * f3 -> IntegerLiteral()
     */
    public void visit(HLoadStmt n, A argu);
@@ -109,18 +109,15 @@ public interface GJVoidVisitor<A> {
 
    /**
     * f0 -> "PRINT"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     */
    public void visit(PrintStmt n, A argu);
 
    /**
-    * f0 -> StmtExp()
-    *       | Call()
+    * f0 -> Call()
     *       | HAllocate()
     *       | BinOp()
-    *       | Temp()
-    *       | IntegerLiteral()
-    *       | Label()
+    *       | SimpleExp()
     */
    public void visit(Exp n, A argu);
 
@@ -128,30 +125,30 @@ public interface GJVoidVisitor<A> {
     * f0 -> "BEGIN"
     * f1 -> StmtList()
     * f2 -> "RETURN"
-    * f3 -> Exp()
+    * f3 -> SimpleExp()
     * f4 -> "END"
     */
    public void visit(StmtExp n, A argu);
 
    /**
     * f0 -> "CALL"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     * f2 -> "("
-    * f3 -> ( Exp() )*
+    * f3 -> ( Temp() )*
     * f4 -> ")"
     */
    public void visit(Call n, A argu);
 
    /**
     * f0 -> "HALLOCATE"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     */
    public void visit(HAllocate n, A argu);
 
    /**
     * f0 -> Operator()
-    * f1 -> Exp()
-    * f2 -> Exp()
+    * f1 -> Temp()
+    * f2 -> SimpleExp()
     */
    public void visit(BinOp n, A argu);
 
@@ -162,6 +159,13 @@ public interface GJVoidVisitor<A> {
     *       | "TIMES"
     */
    public void visit(Operator n, A argu);
+
+   /**
+    * f0 -> Temp()
+    *       | IntegerLiteral()
+    *       | Label()
+    */
+   public void visit(SimpleExp n, A argu);
 
    /**
     * f0 -> "TEMP"

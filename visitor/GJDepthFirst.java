@@ -140,7 +140,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Exp()
+    * f1 -> Temp()
     * f2 -> Label()
     */
    public R visit(CJumpStmt n, A argu) {
@@ -164,9 +164,9 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Exp()
+    * f1 -> Temp()
     * f2 -> IntegerLiteral()
-    * f3 -> Exp()
+    * f3 -> Temp()
     */
    public R visit(HStoreStmt n, A argu) {
       R _ret=null;
@@ -180,7 +180,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    /**
     * f0 -> "HLOAD"
     * f1 -> Temp()
-    * f2 -> Exp()
+    * f2 -> Temp()
     * f3 -> IntegerLiteral()
     */
    public R visit(HLoadStmt n, A argu) {
@@ -207,7 +207,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> "PRINT"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     */
    public R visit(PrintStmt n, A argu) {
       R _ret=null;
@@ -217,13 +217,10 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    }
 
    /**
-    * f0 -> StmtExp()
-    *       | Call()
+    * f0 -> Call()
     *       | HAllocate()
     *       | BinOp()
-    *       | Temp()
-    *       | IntegerLiteral()
-    *       | Label()
+    *       | SimpleExp()
     */
    public R visit(Exp n, A argu) {
       R _ret=null;
@@ -235,7 +232,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
     * f0 -> "BEGIN"
     * f1 -> StmtList()
     * f2 -> "RETURN"
-    * f3 -> Exp()
+    * f3 -> SimpleExp()
     * f4 -> "END"
     */
    public R visit(StmtExp n, A argu) {
@@ -250,9 +247,9 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> "CALL"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     * f2 -> "("
-    * f3 -> ( Exp() )*
+    * f3 -> ( Temp() )*
     * f4 -> ")"
     */
    public R visit(Call n, A argu) {
@@ -267,7 +264,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> "HALLOCATE"
-    * f1 -> Exp()
+    * f1 -> SimpleExp()
     */
    public R visit(HAllocate n, A argu) {
       R _ret=null;
@@ -278,8 +275,8 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> Operator()
-    * f1 -> Exp()
-    * f2 -> Exp()
+    * f1 -> Temp()
+    * f2 -> SimpleExp()
     */
    public R visit(BinOp n, A argu) {
       R _ret=null;
@@ -296,6 +293,17 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
     *       | "TIMES"
     */
    public R visit(Operator n, A argu) {
+      R _ret=null;
+      n.f0.accept(this, argu);
+      return _ret;
+   }
+
+   /**
+    * f0 -> Temp()
+    *       | IntegerLiteral()
+    *       | Label()
+    */
+   public R visit(SimpleExp n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
       return _ret;

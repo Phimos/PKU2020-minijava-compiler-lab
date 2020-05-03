@@ -7,18 +7,18 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> "PRINT"
- * f1 -> Exp()
+ * f1 -> SimpleExp()
  */
 public class PrintStmt implements Node {
    public NodeToken f0;
-   public Exp f1;
+   public SimpleExp f1;
 
-   public PrintStmt(NodeToken n0, Exp n1) {
+   public PrintStmt(NodeToken n0, SimpleExp n1) {
       f0 = n0;
       f1 = n1;
    }
 
-   public PrintStmt(Exp n0) {
+   public PrintStmt(SimpleExp n0) {
       f0 = new NodeToken("PRINT");
       f1 = n0;
    }
