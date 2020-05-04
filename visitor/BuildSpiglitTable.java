@@ -237,7 +237,11 @@ public class BuildSpiglitTable extends GJDepthFirst<Object, MSpgProgram>{
     n.f0.accept(this, argu);
     n.f1.accept(this, argu);
     n.f2.accept(this, argu);
+    argu.passParams = 0;
     n.f3.accept(this, argu);
+    argu.currentProcedure.maxParamsCnt = Math.max(argu.currentProcedure.maxParamsCnt, argu.passParams);
+    argu.passParams = -1;
+    
     n.f4.accept(this, argu);
     return _ret;
  }
@@ -301,6 +305,9 @@ public class BuildSpiglitTable extends GJDepthFirst<Object, MSpgProgram>{
     if(argu.currentStmt != null){
       argu.currentStmt.addVar((Integer)_ret);
    }
+   if(argu.passParams>=0){
+      ++argu.passParams;
+   }
     return _ret;
  }
 
@@ -319,9 +326,6 @@ public class BuildSpiglitTable extends GJDepthFirst<Object, MSpgProgram>{
     Object _ret= n.f0.tokenImage;
     if(!argu.inStmt){
       argu.currentProcedure.tempLabel = (String)_ret;
-   }
-   if(argu.currentProcedure != null){
-      argu.currentProcedure.addCall((String)_ret);
    }
     return _ret;
  }

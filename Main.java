@@ -99,7 +99,7 @@ public class Main{
     public static void lab4(String args[]){
         try{
             InputStream in = new FileInputStream(args[0]);
-            PrintStream out = System.out;
+            PrintStream out = new PrintStream(args[0].replace(".spg", "_my.kg"));
 
             Scanner sc = new Scanner(in);
             String spgCode = "";
@@ -117,7 +117,7 @@ public class Main{
             program.analyzeAll();
 
             root.accept(new SpiglitToKanga(), program);
-            out.print(program.code);
+            //System.out.print(program.code);
             
             //for(MSpgProcedure proc: program.procedures.values()){
             //    for(MSpgStmt stmt:proc.stmts){
@@ -128,6 +128,8 @@ public class Main{
             //        }
             //    }
             //}
+
+            out.print(program.code);
         }
         catch (TokenMgrError e) {
             e.printStackTrace();

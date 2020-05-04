@@ -8,17 +8,18 @@ import java.lang.Math;
 public class MSpgProcedure {
     public ArrayList<MSpgStmt> stmts = new ArrayList<MSpgStmt>();
     HashMap<String, MSpgStmt> labels = new HashMap<String, MSpgStmt>();
-    ArrayList<String> callMethodName = new ArrayList<>();
     int[][] intervals;
     public Integer paramsCnt = 0;
     public Integer spilledCnt = 0;
     public Integer maxParamsCnt = 0;
     public String tempLabel = null;
+    public Integer sCnt = 0;
     HashMap<Integer, Integer> index = new HashMap<>();
     HashMap<Integer, String> temp2regname = new HashMap<>();
+    ArrayList<Integer> localVar = new ArrayList<>();
 
-    String[] regs = {"s0","s1","s2","s3","s4","s5","s6","s7"
-    ,"t0","t1","t2","t3","t4","t5","t6","t7","t8","t9"
+    String[] regs = {"t0","t1","t2","t3","t4","t5","t6","t7","t8","t9"
+    ,"s0","s1","s2","s3","s4","s5","s6","s7"
     ,"a0","a1","a2","a3","v0","v1"};
     boolean[] used = new boolean[24];
     HashMap<Integer, Integer> tempRegs = new HashMap<>(); // temp id, reg index
@@ -45,10 +46,6 @@ public class MSpgProcedure {
 
     public void setParamsCnt(int n){
         paramsCnt = n;
-    }
-
-    public void addCall(String name){
-        callMethodName.add(name);
     }
 
     public void analyze(){
@@ -100,13 +97,13 @@ public class MSpgProcedure {
             }
         }
 
-        for(int i=0;i<intervals.length;++i){
-            System.out.print(intervals[i][0]);
-            System.out.print(" ");
-            System.out.print(intervals[i][1]);
-            System.out.print(" ");
-            System.out.println(intervals[i][2]);
-        }
+        //for(int i=0;i<intervals.length;++i){
+        //    System.out.print(intervals[i][0]);
+        //    System.out.print(" ");
+        //    System.out.print(intervals[i][1]);
+        //    System.out.print(" ");
+        //    System.out.println(intervals[i][2]);
+        //}
 
         //for(int i=0;i<intervals.length;++i){
         //    alloced.add(new MInterval(intervals[i][0],intervals[i][1],intervals[i][2]));
@@ -121,38 +118,47 @@ public class MSpgProcedure {
             used[i] = false;
         }
 
-        for(Integer val: allTemp){
-            if(val < this.paramsCnt){
-                if(val < 4){
-                    temp2regname.put(val, "s"+val);
-                }
-                else{
-                    temp2regname.put(val, "SPILLEDARG "+(val-4));
-                }
+        for(int i=0;i<this.paramsCnt;++i){
+            if(i<4){
+                temp2regname.put(i, "s"+i);
+                ++sCnt;
+                used[10+i] = true;
+            }
+            else{
+                temp2regname.put(i, "SPILLEDARG "+ (i-4));
             }
         }
-        spilledCnt= Math.max(paramsCnt - 4, 0);
+        spilledCnt = Math.max(paramsCnt-4, 0);
 
+        
 
         for(int i=0;i<stmts.size();++i){
             if(stmts.get(i).hasCall){
-                System.out.println(i);
+                for(int j=0;j<intervals.length;++j){
+                    if(intervals[j][1]<=i && intervals[j][2] > i){
+                        localVar.add(intervals[j][0]);
+                    }
+                }
             }
         }
-
     }
 
-    public void spillReg(int temp){
+    public String spillReg(int temp){
+        String tempCode = "";
         alloced.removeIf((x)->{return x.val == temp;});
         if(tempRegs.containsKey(temp)){
             used[tempRegs.get(temp)] = false;
             tempRegs.remove(temp);
+            tempCode = "\n\tASTORE SPILLEDARG "+ spilledCnt + " " + temp2regname.get(temp);
+            System.out.println(tempCode);
         }
-        temp2regname.put(temp, "SPILLEDART " + spilledCnt);
+        temp2regname.put(temp, "SPILLEDARG " + spilledCnt);
         spilledCnt++;
+        System.out.println("SPILLL "+temp);
+        return tempCode;
     }
 
-    public void spillLatest(int t,int temp){
+    public String spillLatest(int t,int temp){
         MInterval top = new MInterval(-1,0,0);
         for(MInterval itv: alloced){
             if(itv.right > top.right){
@@ -160,11 +166,13 @@ public class MSpgProcedure {
             }
         }
         if(top.right <= intervals[index.get(temp)][2]){
-            spillReg(temp);
+            return spillReg(temp);
         }
         else{
-            spillReg(top.val);
+            String tempCode = "";
+            tempCode = spillReg(top.val);
             allocReg(t, temp);
+            return tempCode;
         }
     }
 
@@ -175,28 +183,48 @@ public class MSpgProcedure {
         }
     }
 
-    public void allocReg(int t,int temp){
+    public String  allocReg(int t,int temp){
         clearReg(t);
-        for(int i=8;i<18;++i){
+        if(index.get(temp) == null){
+            temp2regname.put(temp, "v0");
+            return "";
+        }
+        for(int i=(localVar.contains(temp)?10:0);i<18;++i){
             if(!used[i]){
                 tempRegs.put(temp, i);
                 temp2regname.put(temp, regs[i]);
                 used[i]=true;
+                //System.out.println(index.get(temp));
                 int idx = index.get(temp);
                 alloced.add(new MInterval(temp,intervals[idx][1], intervals[idx][2]));
-                return;
+                if(i>=10){
+                    //System.out.println("S reg: "+temp+" "+i);
+                    sCnt = Math.max(sCnt, i-10+1);
+                }
+                return "";
             }
         }
         // spilled
-        spillLatest(t, temp);
+        System.out.println("NEED_TO_SPILL "+temp);
+        return spillLatest(t, temp);
+    }
+
+    public String allocForStmt(){
+        String tempCode = "";
+        for(int temp: stmts.get(stmtCnt).vars){
+            if(!temp2regname.containsKey(temp)){
+                tempCode += allocReg(stmtCnt, temp);
+            }
+        }
+        for(int id: stmts.get(stmtCnt).ids){
+            if(!temp2regname.containsKey(id)){
+                tempCode += allocReg(stmtCnt, id);
+            }
+        }
+        return tempCode;
     }
 
     public String getReg(int temp){
-        if(temp2regname.containsKey(temp))
-            return temp2regname.get(temp);
-        else{
-            allocReg(stmtCnt, temp);
-            return temp2regname.get(temp);
-        }
+        return temp2regname.get(temp);
     }
 }

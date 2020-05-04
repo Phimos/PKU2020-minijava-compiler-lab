@@ -21,19 +21,9 @@ public class MSpgProgram {
 
     public void analyzeAll(){
         for(MSpgProcedure proc: procedures.values()){
-            System.out.println(proc.callMethodName.size());
-            for(String callproc: proc.callMethodName){
-                if(procedures.containsKey(callproc)){
-                    proc.maxParamsCnt = Math.max(proc.maxParamsCnt, procedures.get(callproc).paramsCnt);
-                }
-            }
-        }
-
-        for(MSpgProcedure proc: procedures.values()){
             proc.analyze();
         }
         for(MSpgProcedure proc: procedures.values()){
-            //System.out.println("?????");
             proc.buildIntervals();
         }
     }
@@ -67,7 +57,20 @@ public class MSpgProgram {
             code += c+"\t";
         }
         else{
-            code += c+" ";
+            //if(c.contains("SPILLEDARG")){
+            //    StringBuffer sb = new StringBuffer(code);
+            //    for(int i=sb.length()-1;i>=0;--i){
+            //        if(sb.charAt(i) == '\n'){
+            //            sb.insert(i+1, "\tALOAD v1 "+c+"\n");
+            //            break;
+            //        }
+            //    }
+            //    code = sb.toString();
+            //    code += "v1 ";
+            //}
+            //else{
+                code += c+" ";
+            //}
         }
     }
 
@@ -77,5 +80,13 @@ public class MSpgProgram {
 
     public String getReg(int temp){
         return currentProcedure.getReg(temp);
+    }
+
+    public boolean allocForStmt(){
+        String val = currentProcedure.allocForStmt();
+        if(val != ""){
+            code += val + "\n";
+        }
+        return true;
     }
 }
