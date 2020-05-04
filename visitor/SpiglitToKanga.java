@@ -196,10 +196,7 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
        argu.appendStmt("ALOAD v0 "+temp2 + "\n");
        temp2 = "v1";
     }
-    argu.append("HLOAD");
-    argu.append(temp1);
-    argu.append(temp2);
-    argu.append(val);
+    argu.appendStmt("HLOAD " + temp1 + " " + temp2 + " "+val);
     if(store!=null){
        argu.appendStmt("ASTORE "+store+" v0");
     }
@@ -231,6 +228,7 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
       if(exp.contains("v0")){
          argu.appendStmt("MOVE v1 "+exp);
          exp = "v1";
+         System.out.println("NOT TEST YET");
       }
       if(temp.contains("SPILLEDARG")){
          argu.appendStmt("ALOAD v0 "+temp);
@@ -238,7 +236,7 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
          argu.appendStmt("ASTORE "+temp+" v0");
       }
       else{
-         argu.append("MOVE "+temp + " "+exp);
+         argu.appendStmt("MOVE "+temp + " "+exp);
       }
     }
     return _ret;
@@ -312,7 +310,7 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
     n.f3.accept(this, argu);
     argu.passParams = -1;
     String entry = (String)n.f1.accept(this, argu);
-    argu.append("CALL "+entry+"\n");
+    argu.appendStmt("CALL "+entry+"\n");
     //System.out.println("?????");
     return _ret;
  }
