@@ -194,11 +194,9 @@ public class MSpgProcedure {
                 tempRegs.put(temp, i);
                 temp2regname.put(temp, regs[i]);
                 used[i]=true;
-                //System.out.println(index.get(temp));
                 int idx = index.get(temp);
                 alloced.add(new MInterval(temp,intervals[idx][1], intervals[idx][2]));
                 if(i>=10){
-                    //System.out.println("S reg: "+temp+" "+i);
                     sCnt = Math.max(sCnt, i-10+1);
                 }
                 return "";
@@ -206,7 +204,8 @@ public class MSpgProcedure {
         }
         // spilled
         System.out.println("NEED_TO_SPILL "+temp);
-        return spillLatest(t, temp);
+        return spillReg(temp);
+        //return spillLatest(t, temp);
     }
 
     public String allocForStmt(){

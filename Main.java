@@ -116,7 +116,13 @@ public class Main{
 
             root.accept(new SpiglitToKanga(), program);
             //System.out.print(program.code);
-
+            //MSpgProcedure del =  program.getProcedure("List_Delete");
+            //for(MSpgStmt stmt: del.stmts){
+            //    for(int var: stmt.active){
+            //        System.out.print(var+" ");
+            //    }
+            //    System.out.println();
+            //}
             out.print(program.code);
         }
         catch (TokenMgrError e) {

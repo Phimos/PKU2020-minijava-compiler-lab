@@ -341,6 +341,7 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
        argu.appendStmt("ALOAD v0 " + temp + "\n");
        temp = "v0";
     }
+    
     _ret = op + " " + temp + " " + simple;
     return _ret;
  }
