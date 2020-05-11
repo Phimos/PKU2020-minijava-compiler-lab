@@ -78,15 +78,13 @@ public class MSpgProgram {
         code += "\n\t" + s;
     }
 
-    public String getReg(int temp){
-        return currentProcedure.getReg(temp);
+    public void alloc(){
+        for(MSpgProcedure proc: procedures.values()){
+            proc.alloc();
+        }
     }
 
-    public boolean allocForStmt(){
-        String val = currentProcedure.allocForStmt();
-        if(val != ""){
-            code += val + "\n";
-        }
-        return true;
+    public String getReg(int temp){
+        return currentProcedure.getReg(temp);
     }
 }

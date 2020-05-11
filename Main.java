@@ -113,7 +113,7 @@ public class Main{
 
             root.accept(new BuildSpiglitTable(), program);
             program.analyzeAll();
-
+            program.alloc();
             root.accept(new SpiglitToKanga(), program);
             //System.out.print(program.code);
             //MSpgProcedure del =  program.getProcedure("List_Delete");

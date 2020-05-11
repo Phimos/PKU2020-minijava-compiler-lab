@@ -1,26 +1,19 @@
 MAIN [0][0][1]
 	
-
 	MOVE t0 HALLOCATE 4
 	
-
 	MOVE t1 HALLOCATE 4
 	
-
 	MOVE t2 TV_Start
 	HSTORE t0 0 t2 
 	HSTORE t1 0 t0 
 	
-
 	MOVE t0 t1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -33,111 +26,83 @@ TV_Start [1][2][2]
 	MOVE s0 a0
 
 	
-
 	MOVE t0 HALLOCATE 84
 	
-
 	MOVE t1 HALLOCATE 28
 	
-
 	MOVE t2 Tree_accept
 	HSTORE t0 80 t2 
 	
-
 	MOVE t2 Tree_RecPrint
 	HSTORE t0 76 t2 
 	
-
 	MOVE t2 Tree_Print
 	HSTORE t0 72 t2 
 	
-
 	MOVE t2 Tree_Search
 	HSTORE t0 68 t2 
 	
-
 	MOVE t2 Tree_RemoveLeft
 	HSTORE t0 64 t2 
 	
-
 	MOVE t2 Tree_RemoveRight
 	HSTORE t0 60 t2 
 	
-
 	MOVE t2 Tree_Remove
 	HSTORE t0 56 t2 
 	
-
 	MOVE t2 Tree_Delete
 	HSTORE t0 52 t2 
 	
-
 	MOVE t2 Tree_Insert
 	HSTORE t0 48 t2 
 	
-
 	MOVE t2 Tree_Compare
 	HSTORE t0 44 t2 
 	
-
 	MOVE t2 Tree_SetHas_Right
 	HSTORE t0 40 t2 
 	
-
 	MOVE t2 Tree_SetHas_Left
 	HSTORE t0 36 t2 
 	
-
 	MOVE t2 Tree_GetHas_Left
 	HSTORE t0 32 t2 
 	
-
 	MOVE t2 Tree_GetHas_Right
 	HSTORE t0 28 t2 
 	
-
 	MOVE t2 Tree_SetKey
 	HSTORE t0 24 t2 
 	
-
 	MOVE t2 Tree_GetKey
 	HSTORE t0 20 t2 
 	
-
 	MOVE t2 Tree_GetLeft
 	HSTORE t0 16 t2 
 	
-
 	MOVE t2 Tree_GetRight
 	HSTORE t0 12 t2 
 	
-
 	MOVE t2 Tree_SetLeft
 	HSTORE t0 8 t2 
 	
-
 	MOVE t2 Tree_SetRight
 	HSTORE t0 4 t2 
 	
-
 	MOVE t2 Tree_Init
 	HSTORE t0 0 t2 
 	
-
 	MOVE t2 4
 L2		NOOP 
 	
-
 	MOVE t3 28
 	
-
 	MOVE t4 LT t2 t3
 	CJUMP t4 L3 
 	
-
 	MOVE t3 PLUS t1 t2
 	
-
 	MOVE t4 0
 	HSTORE t3 0 t4 
 	
@@ -146,41 +111,30 @@ L2		NOOP
 L3		NOOP 
 	HSTORE t1 0 t0 
 	
-
 	MOVE s1 t1
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 0
 	
-
 	MOVE t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
 
 	MOVE t3 v0
 	
-
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 72
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -188,23 +142,17 @@ L3		NOOP
 	
 	MOVE v0 t1
 	
-
 	MOVE t0 100000000
 	PRINT t0 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 8
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -213,19 +161,14 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 24
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -234,19 +177,14 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 4
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -255,19 +193,14 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -276,19 +209,14 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -297,19 +225,14 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -318,19 +241,14 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 48
 	
-
 	MOVE t1 14
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -339,16 +257,12 @@ L3		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 72
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -356,35 +270,26 @@ L3		NOOP
 	
 	MOVE v0 t1
 	
-
 	MOVE t0 100000000
 	PRINT t0 
 	
-
 	MOVE t0 HALLOCATE 4
 	
-
 	MOVE t1 HALLOCATE 12
 	
-
 	MOVE t2 MyVisitor_visit
 	HSTORE t0 0 t2 
 	
-
 	MOVE t2 4
 L4		NOOP 
 	
-
 	MOVE t3 12
 	
-
 	MOVE t4 LT t2 t3
 	CJUMP t4 L5 
 	
-
 	MOVE t3 PLUS t1 t2
 	
-
 	MOVE t4 0
 	HSTORE t3 0 t4 
 	
@@ -393,49 +298,36 @@ L4		NOOP
 L5		NOOP 
 	HSTORE t1 0 t0 
 	
-
 	MOVE t0 t1
 	
-
 	MOVE t1 50000000
 	PRINT t1 
 	
-
 	MOVE t1 s1
 	
-
 	HLOAD t2 t1 0
 	
-
 	HLOAD t3 t2 80
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 t0 
 
 	CALL t3
 
 	MOVE t2 v0
 	
-
 	MOVE v0 t2
 	
-
 	MOVE t0 100000000
 	PRINT t0 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 68
 	
-
 	MOVE t1 24
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -443,19 +335,14 @@ L5		NOOP
 	MOVE t3 v0
 	PRINT t3 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 68
 	
-
 	MOVE t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -463,19 +350,14 @@ L5		NOOP
 	MOVE t3 v0
 	PRINT t3 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 68
 	
-
 	MOVE t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -483,19 +365,14 @@ L5		NOOP
 	MOVE t3 v0
 	PRINT t3 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 68
 	
-
 	MOVE t1 50
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -503,19 +380,14 @@ L5		NOOP
 	MOVE t3 v0
 	PRINT t3 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 68
 	
-
 	MOVE t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -523,19 +395,14 @@ L5		NOOP
 	MOVE t3 v0
 	PRINT t3 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 52
 	
-
 	MOVE t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -544,16 +411,12 @@ L5		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 72
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -561,19 +424,14 @@ L5		NOOP
 	
 	MOVE v0 t1
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 68
 	
-
 	MOVE t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -581,7 +439,6 @@ L5		NOOP
 	MOVE t3 v0
 	PRINT t3 
 	
-
 	MOVE t0 0
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -596,15 +453,12 @@ Tree_Init [2][2][0]
 
 	HSTORE s0 12 s1 
 	
-
 	MOVE t0 0
 	HSTORE s0 16 t0 
 	
-
 	MOVE t0 0
 	HSTORE s0 20 t0 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -619,7 +473,6 @@ Tree_SetRight [2][2][0]
 
 	HSTORE s0 8 s1 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -634,7 +487,6 @@ Tree_SetLeft [2][2][0]
 
 	HSTORE s0 4 s1 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -646,7 +498,6 @@ Tree_GetRight [1][1][0]
 	MOVE s0 a0
 
 	
-
 	HLOAD t0 s0 8
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -657,7 +508,6 @@ Tree_GetLeft [1][1][0]
 	MOVE s0 a0
 
 	
-
 	HLOAD t0 s0 4
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -668,7 +518,6 @@ Tree_GetKey [1][1][0]
 	MOVE s0 a0
 
 	
-
 	HLOAD t0 s0 12
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -682,7 +531,6 @@ Tree_SetKey [2][2][0]
 
 	HSTORE s0 12 s1 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -694,7 +542,6 @@ Tree_GetHas_Right [1][1][0]
 	MOVE s0 a0
 
 	
-
 	HLOAD t0 s0 20
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -705,7 +552,6 @@ Tree_GetHas_Left [1][1][0]
 	MOVE s0 a0
 
 	
-
 	HLOAD t0 s0 16
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -719,7 +565,6 @@ Tree_SetHas_Left [2][2][0]
 
 	HSTORE s0 16 s1 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -734,7 +579,6 @@ Tree_SetHas_Right [2][2][0]
 
 	HSTORE s0 20 s1 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -750,13 +594,10 @@ Tree_Compare [3][3][0]
 	MOVE s2 a2
 
 	
-
 	MOVE t0 0
 	
-
 	MOVE t1 PLUS s2 1
 	
-
 	MOVE t2 LT s1 s2
 	CJUMP t2 L6 
 	
@@ -764,13 +605,10 @@ Tree_Compare [3][3][0]
 	JUMP L7 
 L6		NOOP 
 	
-
 	MOVE t2 1
 	
-
 	MOVE t3 LT s1 t1
 	
-
 	MOVE t1 MINUS t2 t3
 	CJUMP t1 L8 
 	
@@ -797,111 +635,83 @@ Tree_Insert [2][5][2]
 	MOVE s1 a1
 
 	
-
 	MOVE t0 HALLOCATE 84
 	
-
 	MOVE t1 HALLOCATE 28
 	
-
 	MOVE t2 Tree_accept
 	HSTORE t0 80 t2 
 	
-
 	MOVE t2 Tree_RecPrint
 	HSTORE t0 76 t2 
 	
-
 	MOVE t2 Tree_Print
 	HSTORE t0 72 t2 
 	
-
 	MOVE t2 Tree_Search
 	HSTORE t0 68 t2 
 	
-
 	MOVE t2 Tree_RemoveLeft
 	HSTORE t0 64 t2 
 	
-
 	MOVE t2 Tree_RemoveRight
 	HSTORE t0 60 t2 
 	
-
 	MOVE t2 Tree_Remove
 	HSTORE t0 56 t2 
 	
-
 	MOVE t2 Tree_Delete
 	HSTORE t0 52 t2 
 	
-
 	MOVE t2 Tree_Insert
 	HSTORE t0 48 t2 
 	
-
 	MOVE t2 Tree_Compare
 	HSTORE t0 44 t2 
 	
-
 	MOVE t2 Tree_SetHas_Right
 	HSTORE t0 40 t2 
 	
-
 	MOVE t2 Tree_SetHas_Left
 	HSTORE t0 36 t2 
 	
-
 	MOVE t2 Tree_GetHas_Left
 	HSTORE t0 32 t2 
 	
-
 	MOVE t2 Tree_GetHas_Right
 	HSTORE t0 28 t2 
 	
-
 	MOVE t2 Tree_SetKey
 	HSTORE t0 24 t2 
 	
-
 	MOVE t2 Tree_GetKey
 	HSTORE t0 20 t2 
 	
-
 	MOVE t2 Tree_GetLeft
 	HSTORE t0 16 t2 
 	
-
 	MOVE t2 Tree_GetRight
 	HSTORE t0 12 t2 
 	
-
 	MOVE t2 Tree_SetLeft
 	HSTORE t0 8 t2 
 	
-
 	MOVE t2 Tree_SetRight
 	HSTORE t0 4 t2 
 	
-
 	MOVE t2 Tree_Init
 	HSTORE t0 0 t2 
 	
-
 	MOVE t2 4
 L10		NOOP 
 	
-
 	MOVE t3 28
 	
-
 	MOVE t4 LT t2 t3
 	CJUMP t4 L11 
 	
-
 	MOVE t3 PLUS t1 t2
 	
-
 	MOVE t4 0
 	HSTORE t3 0 t4 
 	
@@ -910,84 +720,62 @@ L10		NOOP
 L11		NOOP 
 	HSTORE t1 0 t0 
 	
-
 	MOVE s2 t1
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s1 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE v0 t1
 	
-
 	MOVE s3 s0
 	
-
 	MOVE s4 1
 L12		NOOP 
 	CJUMP s4 L13 
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE t0 t1
 	
-
 	MOVE t1 LT s1 t0
 	CJUMP t1 L14 
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L16 
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -999,19 +787,14 @@ L16		NOOP
 	
 	MOVE s4 0
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 36
 	
-
 	MOVE t1 1
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1020,16 +803,12 @@ L16		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 8
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s2 
 
 	CALL t2
@@ -1041,32 +820,24 @@ L17		NOOP
 	JUMP L15 
 L14		NOOP 
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L18 
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1078,19 +849,14 @@ L18		NOOP
 	
 	MOVE s4 0
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 40
 	
-
 	MOVE t1 1
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1099,16 +865,12 @@ L18		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s3
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 4
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s2 
 
 	CALL t2
@@ -1121,7 +883,6 @@ L15		NOOP
 	JUMP L12 
 L13		NOOP 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -1131,68 +892,54 @@ L13		NOOP
 	ALOAD s4 SPILLEDARG 4
 
 END
-Tree_Delete [2][10][3]
-	ASTORE SPILLEDARG 2 s0
-	ASTORE SPILLEDARG 3 s1
-	ASTORE SPILLEDARG 4 s2
-	ASTORE SPILLEDARG 5 s3
-	ASTORE SPILLEDARG 6 s4
-	ASTORE SPILLEDARG 7 s5
-	ASTORE SPILLEDARG 8 s6
-	ASTORE SPILLEDARG 9 s7
+Tree_Delete [2][9][3]
+	ASTORE SPILLEDARG 1 s0
+	ASTORE SPILLEDARG 2 s1
+	ASTORE SPILLEDARG 3 s2
+	ASTORE SPILLEDARG 4 s3
+	ASTORE SPILLEDARG 5 s4
+	ASTORE SPILLEDARG 6 s5
+	ASTORE SPILLEDARG 7 s6
+	ASTORE SPILLEDARG 8 s7
 	MOVE s0 a0
 	MOVE s1 a1
 
 	
-
 	MOVE s2 s0
 	
-
 	MOVE s3 s0
 	
-
 	MOVE s4 1
 	
-
-	MOVE s5 0
+	MOVE v0 0
+	ASTORE SPILLEDARG 0 v0
 	
-
 	MOVE s6 1
 L20		NOOP 
 	CJUMP s4 L21 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE s7 t1
 	
-
 	MOVE t0 LT s1 s7
 	CJUMP t0 L22 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1201,16 +948,12 @@ L20		NOOP
 	
 	MOVE s3 s2
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1225,20 +968,15 @@ L25		NOOP
 	JUMP L23 
 L22		NOOP 
 	
-
 	MOVE t0 LT s7 s1
 	CJUMP t0 L26 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1247,16 +985,12 @@ L22		NOOP
 	
 	MOVE s3 s2
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1272,82 +1006,54 @@ L29		NOOP
 L26		NOOP 
 	CJUMP s6 L30 
 	
-
 	MOVE s7 0
 	
-
-	ALOAD v0 SPILLEDARG 0
-	MOVE v0 1
-	ASTORE SPILLEDARG 0 v0
+	MOVE s5 1
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
-	ALOAD v0 SPILLEDARG 0
-
-	MOVE v1 MINUS v0 t1
-	MOVE t0 v1
+	MOVE t0 MINUS s5 t1
 	CJUMP t0 L34 
 	
-
-	ALOAD v0 SPILLEDARG 1
-	MOVE v0 1
-	ASTORE SPILLEDARG 1 v0
+	MOVE s5 1
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
-	ALOAD v0 SPILLEDARG 1
-
-	MOVE v1 MINUS v0 t1
-	MOVE t0 v1
+	MOVE t0 MINUS s5 t1
 	CJUMP t0 L34 
 	
 	MOVE s7 1
 L34		NOOP 
 	CJUMP s7 L32 
 	
-
 	MOVE v0 1
 	JUMP L33 
 L32		NOOP 
 	
-
 	MOVE t0 s0
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 56
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s3 
 	MOVE a2 s2 
 
@@ -1360,16 +1066,12 @@ L33		NOOP
 	JUMP L31 
 L30		NOOP 
 	
-
 	MOVE t0 s0
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 56
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s3 
 	MOVE a2 s2 
 
@@ -1380,7 +1082,8 @@ L30		NOOP
 	MOVE v0 t1
 L31		NOOP 
 	
-	MOVE s5 1
+	MOVE v0 1
+	ASTORE SPILLEDARG 0 v0
 	
 	MOVE s4 0
 L27		NOOP 
@@ -1389,15 +1092,17 @@ L23		NOOP
 	MOVE s6 0
 	JUMP L20 
 L21		NOOP 
-	MOVE v0 s5	
-	ALOAD s0 SPILLEDARG 2
-	ALOAD s1 SPILLEDARG 3
-	ALOAD s2 SPILLEDARG 4
-	ALOAD s3 SPILLEDARG 5
-	ALOAD s4 SPILLEDARG 6
-	ALOAD s5 SPILLEDARG 7
-	ALOAD s6 SPILLEDARG 8
-	ALOAD s7 SPILLEDARG 9
+
+	ALOAD v1 SPILLEDARG 0
+		MOVE v0 v1	
+	ALOAD s0 SPILLEDARG 1
+	ALOAD s1 SPILLEDARG 2
+	ALOAD s2 SPILLEDARG 3
+	ALOAD s3 SPILLEDARG 4
+	ALOAD s4 SPILLEDARG 5
+	ALOAD s5 SPILLEDARG 6
+	ALOAD s6 SPILLEDARG 7
+	ALOAD s7 SPILLEDARG 8
 
 END
 Tree_Remove [3][4][3]
@@ -1410,32 +1115,24 @@ Tree_Remove [3][4][3]
 	MOVE s2 a2
 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L35 
 	
-
 	MOVE t0 s0
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 64
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s1 
 	MOVE a2 s2 
 
@@ -1443,37 +1140,28 @@ Tree_Remove [3][4][3]
 
 	MOVE t1 v0
 	
-
 	MOVE v0 t1
 	JUMP L36 
 L35		NOOP 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L37 
 	
-
 	MOVE t0 s0
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 60
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s1 
 	MOVE a2 s2 
 
@@ -1485,67 +1173,49 @@ L35		NOOP
 	JUMP L38 
 L37		NOOP 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE s3 t1
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE t0 t1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE t0 t1
 	
-
 	MOVE t1 s0
 	
-
 	HLOAD t2 t1 0
 	
-
 	HLOAD t3 t2 44
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 s3 
 	MOVE a2 t0 
 
@@ -1554,19 +1224,14 @@ L37		NOOP
 	MOVE t2 v0
 	CJUMP t2 L39 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 8
 	
-
 	HLOAD t1 s0 24
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1575,19 +1240,14 @@ L37		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 36
 	
-
 	MOVE t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1598,19 +1258,14 @@ L37		NOOP
 	JUMP L40 
 L39		NOOP 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 4
 	
-
 	HLOAD t1 s0 24
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1619,19 +1274,14 @@ L39		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 40
 	
-
 	MOVE t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1643,7 +1293,6 @@ L40		NOOP
 L38		NOOP 
 L36		NOOP 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -1664,83 +1313,62 @@ Tree_RemoveRight [3][5][2]
 
 L41		NOOP 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L42 
 	
-
 	MOVE s3 s2
 	
-
 	HLOAD t0 s3 0
 	
-
 	HLOAD s4 t0 24
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE t0 t1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
-	
-	MOVE a0 s3 
+		MOVE a0 s3 
 	MOVE a1 t1 
 
 	CALL s4
 
 	MOVE t0 v0
 	
-
 	MOVE v0 t0
 	
 	MOVE s1 s2
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1750,19 +1378,14 @@ L41		NOOP
 	JUMP L41 
 L42		NOOP 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 4
 	
-
 	HLOAD t1 s0 24
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1771,19 +1394,14 @@ L42		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 40
 	
-
 	MOVE t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1792,7 +1410,6 @@ L42		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -1814,83 +1431,62 @@ Tree_RemoveLeft [3][5][2]
 
 L43		NOOP 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L44 
 	
-
 	MOVE s3 s2
 	
-
 	HLOAD t0 s3 0
 	
-
 	HLOAD s4 t0 24
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE t0 t1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
-	
-	MOVE a0 s3 
+		MOVE a0 s3 
 	MOVE a1 t1 
 
 	CALL s4
 
 	MOVE t0 v0
 	
-
 	MOVE v0 t0
 	
 	MOVE s1 s2
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -1900,19 +1496,14 @@ L43		NOOP
 	JUMP L43 
 L44		NOOP 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 8
 	
-
 	HLOAD t1 s0 24
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1921,19 +1512,14 @@ L44		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 36
 	
-
 	MOVE t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 t1 
 
 	CALL t2
@@ -1942,7 +1528,6 @@ L44		NOOP
 	
 	MOVE v0 t3
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -1963,65 +1548,48 @@ Tree_Search [2][6][1]
 	MOVE s1 a1
 
 	
-
 	MOVE s2 s0
 	
-
 	MOVE s3 1
 	
-
 	MOVE s4 0
 L45		NOOP 
 	CJUMP s3 L46 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE s5 t1
 	
-
 	MOVE t0 LT s1 s5
 	CJUMP t0 L47 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L49 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -2036,36 +1604,27 @@ L50		NOOP
 	JUMP L48 
 L47		NOOP 
 	
-
 	MOVE t0 LT s5 s1
 	CJUMP t0 L51 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L53 
 	
-
 	MOVE t0 s2
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
@@ -2101,29 +1660,22 @@ Tree_Print [1][1][2]
 	MOVE s0 a0
 
 	
-
 	MOVE t0 s0
 	
-
 	MOVE t1 s0
 	
-
 	HLOAD t2 t1 0
 	
-
 	HLOAD t3 t2 76
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 t0 
 
 	CALL t3
 
 	MOVE t2 v0
 	
-
 	MOVE v0 t2
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -2138,54 +1690,41 @@ Tree_RecPrint [2][4][2]
 	MOVE s1 a1
 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L55 
 	
-
 	MOVE s2 s0
 	
-
 	HLOAD t0 s2 0
 	
-
 	HLOAD s3 t0 76
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
-	
-	MOVE a0 s2 
+		MOVE a0 s2 
 	MOVE a1 t1 
 
 	CALL s3
 
 	MOVE t0 v0
 	
-
 	MOVE v0 t0
 	JUMP L56 
 L55		NOOP 
@@ -2193,63 +1732,47 @@ L55		NOOP
 	MOVE v0 1
 L56		NOOP 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	PRINT t1 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L57 
 	
-
 	MOVE s2 s0
 	
-
 	HLOAD t0 s2 0
 	
-
 	HLOAD s3 t0 76
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
-	
-	MOVE a0 s2 
+		MOVE a0 s2 
 	MOVE a1 t1 
 
 	CALL s3
@@ -2263,7 +1786,6 @@ L57		NOOP
 	MOVE v0 1
 L58		NOOP 
 	
-
 	MOVE t0 1
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -2279,30 +1801,23 @@ Tree_accept [2][2][2]
 	MOVE s1 a1
 
 	
-
 	MOVE t0 333
 	PRINT t0 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 0
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 	MOVE a1 s0 
 
 	CALL t2
 
 	MOVE t1 v0
 	
-
 	MOVE v0 t1
 	
-
 	MOVE t0 0
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -2316,58 +1831,44 @@ Visitor_visit [2][2][2]
 	MOVE s1 a1
 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L59 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	HSTORE s0 8 t1 
 	
-
 	HLOAD t0 s0 8
 	
-
 	MOVE t1 t0
 	
-
 	HLOAD t0 t1 0
 	
-
 	HLOAD t2 t0 80
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 s0 
 
 	CALL t2
 
 	MOVE t0 v0
 	
-
 	MOVE v0 t0
 	JUMP L60 
 L59		NOOP 
@@ -2375,51 +1876,38 @@ L59		NOOP
 	MOVE v0 0
 L60		NOOP 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L61 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	HSTORE s0 4 t1 
 	
-
 	HLOAD t0 s0 4
 	
-
 	MOVE t1 t0
 	
-
 	HLOAD t0 t1 0
 	
-
 	HLOAD t2 t0 80
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 s0 
 
 	CALL t2
@@ -2433,7 +1921,6 @@ L61		NOOP
 	MOVE v0 0
 L62		NOOP 
 	
-
 	MOVE t0 0
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0
@@ -2447,58 +1934,44 @@ MyVisitor_visit [2][2][2]
 	MOVE s1 a1
 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 28
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L63 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 12
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	HSTORE s0 8 t1 
 	
-
 	HLOAD t0 s0 8
 	
-
 	MOVE t1 t0
 	
-
 	HLOAD t0 t1 0
 	
-
 	HLOAD t2 t0 80
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 s0 
 
 	CALL t2
 
 	MOVE t0 v0
 	
-
 	MOVE v0 t0
 	JUMP L64 
 L63		NOOP 
@@ -2506,67 +1979,50 @@ L63		NOOP
 	MOVE v0 0
 L64		NOOP 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 20
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	PRINT t1 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 32
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	CJUMP t1 L65 
 	
-
 	MOVE t0 s1
 	
-
 	HLOAD t1 t0 0
 	
-
 	HLOAD t2 t1 16
-	
-	MOVE a0 t0 
+		MOVE a0 t0 
 
 	CALL t2
 
 	MOVE t1 v0
 	HSTORE s0 4 t1 
 	
-
 	HLOAD t0 s0 4
 	
-
 	MOVE t1 t0
 	
-
 	HLOAD t0 t1 0
 	
-
 	HLOAD t2 t0 80
-	
-	MOVE a0 t1 
+		MOVE a0 t1 
 	MOVE a1 s0 
 
 	CALL t2
@@ -2580,7 +2036,6 @@ L65		NOOP
 	MOVE v0 0
 L66		NOOP 
 	
-
 	MOVE t0 0
 	MOVE v0 t0	
 	ALOAD s0 SPILLEDARG 0

@@ -91,9 +91,8 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
  public Object visit(Stmt n, MSpgProgram argu) {
     Object _ret=null;
     argu.joinStmt();
-    if(argu.allocForStmt()) {
-      n.f0.accept(this, argu);
-    }
+    //argu.allocForStmt();
+    n.f0.accept(this, argu);
     argu.outStmt();
     return _ret;
  }
@@ -231,7 +230,6 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
          System.out.println("NOT TEST YET");
       }
       if(temp.contains("SPILLEDARG")){
-         argu.appendStmt("ALOAD v0 "+temp);
          argu.appendStmt("MOVE v0 "+exp);
          argu.appendStmt("ASTORE "+temp+" v0");
       }

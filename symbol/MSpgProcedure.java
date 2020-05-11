@@ -143,22 +143,19 @@ public class MSpgProcedure {
         }
     }
 
-    public String spillReg(int temp){
-        String tempCode = "";
+    public void spillReg(int temp){
         alloced.removeIf((x)->{return x.val == temp;});
         if(tempRegs.containsKey(temp)){
             used[tempRegs.get(temp)] = false;
             tempRegs.remove(temp);
-            tempCode = "\n\tASTORE SPILLEDARG "+ spilledCnt + " " + temp2regname.get(temp);
-            System.out.println(tempCode);
         }
         temp2regname.put(temp, "SPILLEDARG " + spilledCnt);
         spilledCnt++;
         System.out.println("SPILLL "+temp);
-        return tempCode;
+        return ;
     }
 
-    public String spillLatest(int t,int temp){
+    public void spillLatest(int t,int temp){
         MInterval top = new MInterval(-1,0,0);
         for(MInterval itv: alloced){
             if(itv.right > top.right){
@@ -166,13 +163,11 @@ public class MSpgProcedure {
             }
         }
         if(top.right <= intervals[index.get(temp)][2]){
-            return spillReg(temp);
+            spillReg(temp);
         }
         else{
-            String tempCode = "";
-            tempCode = spillReg(top.val);
+            spillReg(top.val);
             allocReg(t, temp);
-            return tempCode;
         }
     }
 
@@ -183,11 +178,11 @@ public class MSpgProcedure {
         }
     }
 
-    public String  allocReg(int t,int temp){
+    public void allocReg(int t,int temp){
         clearReg(t);
         if(index.get(temp) == null){
             temp2regname.put(temp, "v0");
-            return "";
+            return ;
         }
         for(int i=(localVar.contains(temp)?10:0);i<18;++i){
             if(!used[i]){
@@ -199,28 +194,34 @@ public class MSpgProcedure {
                 if(i>=10){
                     sCnt = Math.max(sCnt, i-10+1);
                 }
-                return "";
+                return ;
             }
         }
         // spilled
         System.out.println("NEED_TO_SPILL "+temp);
-        return spillReg(temp);
+        spillLatest(t, temp);
+        //spillReg(temp);
+        return;
         //return spillLatest(t, temp);
     }
 
-    public String allocForStmt(){
-        String tempCode = "";
-        for(int temp: stmts.get(stmtCnt).vars){
-            if(!temp2regname.containsKey(temp)){
-                tempCode += allocReg(stmtCnt, temp);
+   // public void alloc(){
+   //     for(int i=0;i<stmts.size();++i){}
+   // }
+
+    public void alloc(){
+        for(int i=0;i<stmts.size();++i){
+            for(int temp: stmts.get(i).vars){
+                if(!temp2regname.containsKey(temp)){
+                    allocReg(i, temp);
+                }
+            }
+            for(int id:stmts.get(i).ids){
+                if(!temp2regname.containsKey(id)){
+                    allocReg(i, id);
+                }
             }
         }
-        for(int id: stmts.get(stmtCnt).ids){
-            if(!temp2regname.containsKey(id)){
-                tempCode += allocReg(stmtCnt, id);
-            }
-        }
-        return tempCode;
     }
 
     public String getReg(int temp){
