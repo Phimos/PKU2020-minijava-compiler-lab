@@ -151,7 +151,7 @@ public class MSpgProcedure {
         }
         temp2regname.put(temp, "SPILLEDARG " + spilledCnt);
         spilledCnt++;
-        System.out.println("SPILLL "+temp);
+        //System.out.println("SPILLL "+temp);
         return ;
     }
 
@@ -198,16 +198,12 @@ public class MSpgProcedure {
             }
         }
         // spilled
-        System.out.println("NEED_TO_SPILL "+temp);
+        //System.out.println("NEED_TO_SPILL "+temp);
         spillLatest(t, temp);
         //spillReg(temp);
         return;
         //return spillLatest(t, temp);
     }
-
-   // public void alloc(){
-   //     for(int i=0;i<stmts.size();++i){}
-   // }
 
     public void alloc(){
         for(int i=0;i<stmts.size();++i){

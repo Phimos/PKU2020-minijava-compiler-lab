@@ -73,13 +73,10 @@ public class Main{
             int mx = 0;
             while(matcher.find()){
                 int num = Integer.valueOf(matcher.group(2).toString());
-                // group(2) - > num
                 if(num > mx)
                     mx = num;
             }
-            //System.out.println(mx);
             PigletToSpigletVisitor lab3 = new PigletToSpigletVisitor(mx+10);
-            // ensure temp from bigger num
             MSpiglet result = root.accept(lab3);
             PrintStream out = new PrintStream(args[0].replace(".pg", ".spg"));
             out.println(result.getCode().toString());
@@ -97,7 +94,7 @@ public class Main{
     public static void lab4(String args[]){
         try{
             InputStream in = new FileInputStream(args[0]);
-            PrintStream out = new PrintStream(args[0].replace(".spg", "_my.kg"));
+            PrintStream out = new PrintStream(args[0].replace(".spg", ".kg"));
 
             Scanner sc = new Scanner(in);
             String spgCode = "";
@@ -108,21 +105,14 @@ public class Main{
             in = new ByteArrayInputStream(spgCode.getBytes());
 
             MSpgProgram program = new MSpgProgram();
-
             Node root = new SpigletParser(in).Goal();
-
             root.accept(new BuildSpiglitTable(), program);
+
             program.analyzeAll();
             program.alloc();
+
             root.accept(new SpiglitToKanga(), program);
-            //System.out.print(program.code);
-            //MSpgProcedure del =  program.getProcedure("List_Delete");
-            //for(MSpgStmt stmt: del.stmts){
-            //    for(int var: stmt.active){
-            //        System.out.print(var+" ");
-            //    }
-            //    System.out.println();
-            //}
+
             out.print(program.code);
         }
         catch (TokenMgrError e) {

@@ -351,7 +351,6 @@ public class SpiglitToKanga extends GJDepthFirst<Object, MSpgProgram>{
   *       | "TIMES"
   */
  public Object visit(Operator n, MSpgProgram argu) {
-    Object _ret=null;
     n.f0.accept(this, argu);
     String op = ((NodeToken)n.f0.choice).tokenImage;
     return op;
