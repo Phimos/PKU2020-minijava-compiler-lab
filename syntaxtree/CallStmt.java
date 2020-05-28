@@ -6,25 +6,21 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> "CJUMP"
- * f1 -> Reg()
- * f2 -> Label()
+ * f0 -> "CALL"
+ * f1 -> SimpleExp()
  */
-public class CJumpStmt implements Node {
+public class CallStmt implements Node {
    public NodeToken f0;
-   public Reg f1;
-   public Label f2;
+   public SimpleExp f1;
 
-   public CJumpStmt(NodeToken n0, Reg n1, Label n2) {
+   public CallStmt(NodeToken n0, SimpleExp n1) {
       f0 = n0;
       f1 = n1;
-      f2 = n2;
    }
 
-   public CJumpStmt(Reg n0, Label n1) {
-      f0 = new NodeToken("CJUMP");
+   public CallStmt(SimpleExp n0) {
+      f0 = new NodeToken("CALL");
       f1 = n0;
-      f2 = n1;
    }
 
    public void accept(visitor.Visitor v) {

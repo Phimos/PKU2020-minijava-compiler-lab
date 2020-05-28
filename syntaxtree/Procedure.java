@@ -10,29 +10,57 @@ package syntaxtree;
  * f1 -> "["
  * f2 -> IntegerLiteral()
  * f3 -> "]"
- * f4 -> StmtExp()
+ * f4 -> "["
+ * f5 -> IntegerLiteral()
+ * f6 -> "]"
+ * f7 -> "["
+ * f8 -> IntegerLiteral()
+ * f9 -> "]"
+ * f10 -> StmtList()
+ * f11 -> "END"
  */
 public class Procedure implements Node {
    public Label f0;
    public NodeToken f1;
    public IntegerLiteral f2;
    public NodeToken f3;
-   public StmtExp f4;
+   public NodeToken f4;
+   public IntegerLiteral f5;
+   public NodeToken f6;
+   public NodeToken f7;
+   public IntegerLiteral f8;
+   public NodeToken f9;
+   public StmtList f10;
+   public NodeToken f11;
 
-   public Procedure(Label n0, NodeToken n1, IntegerLiteral n2, NodeToken n3, StmtExp n4) {
+   public Procedure(Label n0, NodeToken n1, IntegerLiteral n2, NodeToken n3, NodeToken n4, IntegerLiteral n5, NodeToken n6, NodeToken n7, IntegerLiteral n8, NodeToken n9, StmtList n10, NodeToken n11) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
       f3 = n3;
       f4 = n4;
+      f5 = n5;
+      f6 = n6;
+      f7 = n7;
+      f8 = n8;
+      f9 = n9;
+      f10 = n10;
+      f11 = n11;
    }
 
-   public Procedure(Label n0, IntegerLiteral n1, StmtExp n2) {
+   public Procedure(Label n0, IntegerLiteral n1, IntegerLiteral n2, IntegerLiteral n3, StmtList n4) {
       f0 = n0;
       f1 = new NodeToken("[");
       f2 = n1;
       f3 = new NodeToken("]");
-      f4 = n2;
+      f4 = new NodeToken("[");
+      f5 = n2;
+      f6 = new NodeToken("]");
+      f7 = new NodeToken("[");
+      f8 = n3;
+      f9 = new NodeToken("]");
+      f10 = n4;
+      f11 = new NodeToken("END");
    }
 
    public void accept(visitor.Visitor v) {

@@ -7,24 +7,24 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> "HSTORE"
- * f1 -> Temp()
+ * f1 -> Reg()
  * f2 -> IntegerLiteral()
- * f3 -> Temp()
+ * f3 -> Reg()
  */
 public class HStoreStmt implements Node {
    public NodeToken f0;
-   public Temp f1;
+   public Reg f1;
    public IntegerLiteral f2;
-   public Temp f3;
+   public Reg f3;
 
-   public HStoreStmt(NodeToken n0, Temp n1, IntegerLiteral n2, Temp n3) {
+   public HStoreStmt(NodeToken n0, Reg n1, IntegerLiteral n2, Reg n3) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
       f3 = n3;
    }
 
-   public HStoreStmt(Temp n0, IntegerLiteral n1, Temp n2) {
+   public HStoreStmt(Reg n0, IntegerLiteral n1, Reg n2) {
       f0 = new NodeToken("HSTORE");
       f1 = n0;
       f2 = n1;

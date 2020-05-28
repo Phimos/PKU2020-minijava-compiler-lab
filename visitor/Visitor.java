@@ -28,10 +28,19 @@ public interface Visitor {
 
    /**
     * f0 -> "MAIN"
-    * f1 -> StmtList()
-    * f2 -> "END"
-    * f3 -> ( Procedure() )*
-    * f4 -> <EOF>
+    * f1 -> "["
+    * f2 -> IntegerLiteral()
+    * f3 -> "]"
+    * f4 -> "["
+    * f5 -> IntegerLiteral()
+    * f6 -> "]"
+    * f7 -> "["
+    * f8 -> IntegerLiteral()
+    * f9 -> "]"
+    * f10 -> StmtList()
+    * f11 -> "END"
+    * f12 -> ( Procedure() )*
+    * f13 -> <EOF>
     */
    public void visit(Goal n);
 
@@ -45,7 +54,14 @@ public interface Visitor {
     * f1 -> "["
     * f2 -> IntegerLiteral()
     * f3 -> "]"
-    * f4 -> StmtExp()
+    * f4 -> "["
+    * f5 -> IntegerLiteral()
+    * f6 -> "]"
+    * f7 -> "["
+    * f8 -> IntegerLiteral()
+    * f9 -> "]"
+    * f10 -> StmtList()
+    * f11 -> "END"
     */
    public void visit(Procedure n);
 
@@ -58,6 +74,10 @@ public interface Visitor {
     *       | HLoadStmt()
     *       | MoveStmt()
     *       | PrintStmt()
+    *       | ALoadStmt()
+    *       | AStoreStmt()
+    *       | PassArgStmt()
+    *       | CallStmt()
     */
    public void visit(Stmt n);
 
@@ -73,7 +93,7 @@ public interface Visitor {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Temp()
+    * f1 -> Reg()
     * f2 -> Label()
     */
    public void visit(CJumpStmt n);
@@ -86,23 +106,23 @@ public interface Visitor {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Temp()
+    * f1 -> Reg()
     * f2 -> IntegerLiteral()
-    * f3 -> Temp()
+    * f3 -> Reg()
     */
    public void visit(HStoreStmt n);
 
    /**
     * f0 -> "HLOAD"
-    * f1 -> Temp()
-    * f2 -> Temp()
+    * f1 -> Reg()
+    * f2 -> Reg()
     * f3 -> IntegerLiteral()
     */
    public void visit(HLoadStmt n);
 
    /**
     * f0 -> "MOVE"
-    * f1 -> Temp()
+    * f1 -> Reg()
     * f2 -> Exp()
     */
    public void visit(MoveStmt n);
@@ -114,30 +134,38 @@ public interface Visitor {
    public void visit(PrintStmt n);
 
    /**
-    * f0 -> Call()
-    *       | HAllocate()
-    *       | BinOp()
-    *       | SimpleExp()
+    * f0 -> "ALOAD"
+    * f1 -> Reg()
+    * f2 -> SpilledArg()
     */
-   public void visit(Exp n);
+   public void visit(ALoadStmt n);
 
    /**
-    * f0 -> "BEGIN"
-    * f1 -> StmtList()
-    * f2 -> "RETURN"
-    * f3 -> SimpleExp()
-    * f4 -> "END"
+    * f0 -> "ASTORE"
+    * f1 -> SpilledArg()
+    * f2 -> Reg()
     */
-   public void visit(StmtExp n);
+   public void visit(AStoreStmt n);
+
+   /**
+    * f0 -> "PASSARG"
+    * f1 -> IntegerLiteral()
+    * f2 -> Reg()
+    */
+   public void visit(PassArgStmt n);
 
    /**
     * f0 -> "CALL"
     * f1 -> SimpleExp()
-    * f2 -> "("
-    * f3 -> ( Temp() )*
-    * f4 -> ")"
     */
-   public void visit(Call n);
+   public void visit(CallStmt n);
+
+   /**
+    * f0 -> HAllocate()
+    *       | BinOp()
+    *       | SimpleExp()
+    */
+   public void visit(Exp n);
 
    /**
     * f0 -> "HALLOCATE"
@@ -147,7 +175,7 @@ public interface Visitor {
 
    /**
     * f0 -> Operator()
-    * f1 -> Temp()
+    * f1 -> Reg()
     * f2 -> SimpleExp()
     */
    public void visit(BinOp n);
@@ -161,17 +189,45 @@ public interface Visitor {
    public void visit(Operator n);
 
    /**
-    * f0 -> Temp()
+    * f0 -> "SPILLEDARG"
+    * f1 -> IntegerLiteral()
+    */
+   public void visit(SpilledArg n);
+
+   /**
+    * f0 -> Reg()
     *       | IntegerLiteral()
     *       | Label()
     */
    public void visit(SimpleExp n);
 
    /**
-    * f0 -> "TEMP"
-    * f1 -> IntegerLiteral()
+    * f0 -> "a0"
+    *       | "a1"
+    *       | "a2"
+    *       | "a3"
+    *       | "t0"
+    *       | "t1"
+    *       | "t2"
+    *       | "t3"
+    *       | "t4"
+    *       | "t5"
+    *       | "t6"
+    *       | "t7"
+    *       | "s0"
+    *       | "s1"
+    *       | "s2"
+    *       | "s3"
+    *       | "s4"
+    *       | "s5"
+    *       | "s6"
+    *       | "s7"
+    *       | "t8"
+    *       | "t9"
+    *       | "v0"
+    *       | "v1"
     */
-   public void visit(Temp n);
+   public void visit(Reg n);
 
    /**
     * f0 -> <INTEGER_LITERAL>

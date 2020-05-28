@@ -6,23 +6,23 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> "CJUMP"
+ * f0 -> "ALOAD"
  * f1 -> Reg()
- * f2 -> Label()
+ * f2 -> SpilledArg()
  */
-public class CJumpStmt implements Node {
+public class ALoadStmt implements Node {
    public NodeToken f0;
    public Reg f1;
-   public Label f2;
+   public SpilledArg f2;
 
-   public CJumpStmt(NodeToken n0, Reg n1, Label n2) {
+   public ALoadStmt(NodeToken n0, Reg n1, SpilledArg n2) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
    }
 
-   public CJumpStmt(Reg n0, Label n1) {
-      f0 = new NodeToken("CJUMP");
+   public ALoadStmt(Reg n0, SpilledArg n1) {
+      f0 = new NodeToken("ALOAD");
       f1 = n0;
       f2 = n1;
    }

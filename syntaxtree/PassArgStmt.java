@@ -6,23 +6,23 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> "CJUMP"
- * f1 -> Reg()
- * f2 -> Label()
+ * f0 -> "PASSARG"
+ * f1 -> IntegerLiteral()
+ * f2 -> Reg()
  */
-public class CJumpStmt implements Node {
+public class PassArgStmt implements Node {
    public NodeToken f0;
-   public Reg f1;
-   public Label f2;
+   public IntegerLiteral f1;
+   public Reg f2;
 
-   public CJumpStmt(NodeToken n0, Reg n1, Label n2) {
+   public PassArgStmt(NodeToken n0, IntegerLiteral n1, Reg n2) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
    }
 
-   public CJumpStmt(Reg n0, Label n1) {
-      f0 = new NodeToken("CJUMP");
+   public PassArgStmt(IntegerLiteral n0, Reg n1) {
+      f0 = new NodeToken("PASSARG");
       f1 = n0;
       f2 = n1;
    }

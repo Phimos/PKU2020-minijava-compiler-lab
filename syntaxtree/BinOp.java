@@ -7,15 +7,15 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> Operator()
- * f1 -> Temp()
+ * f1 -> Reg()
  * f2 -> SimpleExp()
  */
 public class BinOp implements Node {
    public Operator f0;
-   public Temp f1;
+   public Reg f1;
    public SimpleExp f2;
 
-   public BinOp(Operator n0, Temp n1, SimpleExp n2) {
+   public BinOp(Operator n0, Reg n1, SimpleExp n2) {
       f0 = n0;
       f1 = n1;
       f2 = n2;

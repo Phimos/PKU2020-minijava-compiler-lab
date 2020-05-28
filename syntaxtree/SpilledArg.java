@@ -6,25 +6,21 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> "CJUMP"
- * f1 -> Reg()
- * f2 -> Label()
+ * f0 -> "SPILLEDARG"
+ * f1 -> IntegerLiteral()
  */
-public class CJumpStmt implements Node {
+public class SpilledArg implements Node {
    public NodeToken f0;
-   public Reg f1;
-   public Label f2;
+   public IntegerLiteral f1;
 
-   public CJumpStmt(NodeToken n0, Reg n1, Label n2) {
+   public SpilledArg(NodeToken n0, IntegerLiteral n1) {
       f0 = n0;
       f1 = n1;
-      f2 = n2;
    }
 
-   public CJumpStmt(Reg n0, Label n1) {
-      f0 = new NodeToken("CJUMP");
+   public SpilledArg(IntegerLiteral n0) {
+      f0 = new NodeToken("SPILLEDARG");
       f1 = n0;
-      f2 = n1;
    }
 
    public void accept(visitor.Visitor v) {

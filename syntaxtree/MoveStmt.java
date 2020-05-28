@@ -7,21 +7,21 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> "MOVE"
- * f1 -> Temp()
+ * f1 -> Reg()
  * f2 -> Exp()
  */
 public class MoveStmt implements Node {
    public NodeToken f0;
-   public Temp f1;
+   public Reg f1;
    public Exp f2;
 
-   public MoveStmt(NodeToken n0, Temp n1, Exp n2) {
+   public MoveStmt(NodeToken n0, Reg n1, Exp n2) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
    }
 
-   public MoveStmt(Temp n0, Exp n1) {
+   public MoveStmt(Reg n0, Exp n1) {
       f0 = new NodeToken("MOVE");
       f1 = n0;
       f2 = n1;
